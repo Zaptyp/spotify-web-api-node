@@ -43,7 +43,7 @@
     "sinon": "^19.0.2",
     "canvas": "^2.11.2",
     "bufferutil": "^4.0.8",
-    "utf-8-validate": "^6.0.4",
+    "utf-8-validate": "^6.0.5",
     "jest-resolve": "^29.7.0",
     "minimist": "^1.2.8",
     "set-value": ">=4.1.0",
