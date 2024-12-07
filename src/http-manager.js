@@ -44,7 +44,14 @@ var _getParametersFromRequest = function (request) {
  * @param {Response} response
  */
 var _toError = async function (response) {
-  const body = await response.json();
+  let body
+  let response2
+  try {
+    response2 = response.clone();
+    body = await response.json();
+  } catch (e) {
+    body = await response2.text();
+  }
 
   if (
     typeof body === 'object' &&
