@@ -1,4 +1,5 @@
-> :warning: **THIS PROJECT IS NOT A CONTINUATION OF THE SPOTIFY WEB API NODE IT IS ONLY USED FOR MY ONE PROJECT AND WILL NOT BE SUPPORTED WHEN YOU HAVE A PROBLEM WITH IT!!!**
+> [!IMPORTANT]  
+> **THIS PROJECT IS NOT A CONTINUATION OF THE > SPOTIFY WEB > API NODE IT IS ONLY USED FOR MY ONE PROJECT > AND WILL NOT > BE SUPPORTED WHEN YOU HAVE A PROBLEM WITH > IT!!!**
 
 [![Tests](https://travis-ci.org/thelinmichael/spotify-web-api-node.svg?branch=master)](https://travis-ci.org/thelinmichael/spotify-web-api-node)
 [![Coverage Status](https://coveralls.io/repos/thelinmichael/spotify-web-api-node/badge.svg)](https://coveralls.io/r/thelinmichael/spotify-web-api-node)
@@ -10,7 +11,8 @@ Project owners are [thelinmichael](https://github.com/thelinmichael) and [JMPere
 
 ## Version 5
 
-> :warning: Since the last release (4.0.0, released over year ago) a lot of new functionality has been added by a lot of different contributors. **Thank you.** In order to implement some of the feature requests, some **breaking changes** had to be made. A list of them, along with a list of the new functionality, can be found in the [CHANGELOG](https://github.com/thelinmichael/spotify-web-api-node/blob/master/CHANGELOG.md). 
+> [!WARNING]
+> Since the last release (4.0.0, released over year ago) a lot of new functionality has been added by a lot of different contributors. **Thank you.** In order to implement some of the feature requests, some **breaking changes** had to be made. A list of them, along with a list of the new functionality, can be found in the [CHANGELOG](https://github.com/thelinmichael/spotify-web-api-node/blob/master/CHANGELOG.md).
 
 ## Table of contents
 
