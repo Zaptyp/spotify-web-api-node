@@ -1,4 +1,4 @@
-# Spotify Web API Node
+> :warning: **THIS PROJECT IS NOT A CONTINUATION OF THE SPOTIFY WEB API NODE IT IS ONLY USED FOR MY ONE PROJECT AND WILL NOT BE SUPPORTED WHEN YOU HAVE A PROBLEM WITH IT!!!**
 
 [![Tests](https://travis-ci.org/thelinmichael/spotify-web-api-node.svg?branch=master)](https://travis-ci.org/thelinmichael/spotify-web-api-node)
 [![Coverage Status](https://coveralls.io/repos/thelinmichael/spotify-web-api-node/badge.svg)](https://coveralls.io/r/thelinmichael/spotify-web-api-node)
