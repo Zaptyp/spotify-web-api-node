@@ -1,5 +1,5 @@
 > [!IMPORTANT]  
-> **THIS PROJECT IS NOT A CONTINUATION OF THE > SPOTIFY WEB > API NODE IT IS ONLY USED FOR MY ONE PROJECT > AND WILL NOT > BE SUPPORTED WHEN YOU HAVE A PROBLEM WITH > IT!!!**
+> **THIS PROJECT IS NOT A CONTINUATION OF THE SPOTIFY WEB API NODE IT IS ONLY USED FOR MY ONE PROJECT AND WILL NOT BE SUPPORTED WHEN YOU HAVE A PROBLEM WITH IT!!!**
 
 [![Tests](https://img.shields.io/github/actions/workflow/status/Zaptyp/spotify-web-api-node/tester.yml?style=flat)](https://github.com/Zaptyp/spotify-web-api-node/actions)
 [![Coverage Status](https://img.shields.io/coverallsCoverage/github/Zaptyp/spotify-web-api-node?style=flat)](https://coveralls.io/github/Zaptyp/spotify-web-api-node)
