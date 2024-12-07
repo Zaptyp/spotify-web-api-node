@@ -72,6 +72,10 @@ var _toError = async function (response) {
 
 /* Make the request to the Web API */
 HttpManager._makeRequest = function (method, options, uri, callback) {
+  if (typeof callback !== 'function') {
+    throw new TypeError('Expected callback to be a function');
+  }
+
   const headers = new Headers(options.headers || {});
   let serializationMethod = JSON.stringify;
 
@@ -83,7 +87,7 @@ HttpManager._makeRequest = function (method, options, uri, callback) {
   let timeoutId;
 
   if (options.timeout) {
-    setTimeout(() => {
+    timeoutId = setTimeout(() => {
       controller.abort();
     }, options.timeout);
   }
@@ -94,7 +98,9 @@ HttpManager._makeRequest = function (method, options, uri, callback) {
     body = serializationMethod(body);
   }
 
-  fetch(uri + (options.query ? '?' + options.query : ''), {
+  const fullUri = uri + (options.query ? '?' + options.query : '');
+
+  fetch(fullUri, {
     method,
     headers,
     body,
@@ -114,6 +120,8 @@ HttpManager._makeRequest = function (method, options, uri, callback) {
       });
     })
     .catch(err => {
+      clearTimeout(timeoutId);
+
       if (controller.signal.aborted) {
         return callback(
           new TimeoutError(`request took longer than ${options.timeout}ms`)
