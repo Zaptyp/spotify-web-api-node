@@ -405,6 +405,7 @@ SpotifyWebApi.prototype = {
 
   /**
    * Get related artists.
+   * @deprecated As of November 27 Spotify DEPRECATED this ENDPOINT and can be removed in future. (https://developer.spotify.com/blog/2024-11-27-changes-to-the-web-api)
    * @param {string} artistId The artist's ID.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @example getArtistRelatedArtists('0oSGxfWSnnOXhD2fKuz2Gy').then(...)
@@ -412,6 +413,11 @@ SpotifyWebApi.prototype = {
    *          related artists. If the promise is rejected, it contains an error object. Not returned if a callback is given.
    */
   getArtistRelatedArtists: function (artistId, callback) {
+    console.warn(
+      "IMPORTANT: As of November 27, 2024, Spotify has DEPRECATED this endpoint. It may be removed in future updates. " +
+      "For more details, visit: https://developer.spotify.com/blog/2024-11-27-changes-to-the-web-api"
+    );
+    
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/artists/' + artistId + '/related-artists')
       .build()
@@ -729,6 +735,7 @@ SpotifyWebApi.prototype = {
 
   /**
    * Get audio features for a single track identified by its unique Spotify ID.
+   * @deprecated As of November 27 Spotify DEPRECATED this ENDPOINT and can be removed in future. (https://developer.spotify.com/blog/2024-11-27-changes-to-the-web-api)
    * @param {string} trackId The track ID
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @example getAudioFeaturesForTrack('38P3Q4QcdjQALGF2Z92BmR').then(...)
@@ -737,6 +744,11 @@ SpotifyWebApi.prototype = {
    *          rejected, it contains an error object. Not returned if a callback is given.
    */
   getAudioFeaturesForTrack: function (trackId, callback) {
+    console.warn(
+      "IMPORTANT: As of November 27, 2024, Spotify has DEPRECATED this endpoint. It may be removed in future updates. " +
+      "For more details, visit: https://developer.spotify.com/blog/2024-11-27-changes-to-the-web-api"
+    );
+    
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/audio-features/' + trackId)
       .build()
@@ -745,6 +757,7 @@ SpotifyWebApi.prototype = {
 
   /**
    * Get audio analysis for a single track identified by its unique Spotify ID.
+   * @deprecated As of November 27 Spotify DEPRECATED this ENDPOINT and can be removed in future. (https://developer.spotify.com/blog/2024-11-27-changes-to-the-web-api)
    * @param {string} trackId The track ID
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @example getAudioAnalysisForTrack('38P3Q4QcdjQALGF2Z92BmR').then(...)
@@ -753,6 +766,11 @@ SpotifyWebApi.prototype = {
    *          rejected, it contains an error object. Not returned if a callback is given.
    */
   getAudioAnalysisForTrack: function (trackId, callback) {
+    console.warn(
+      "IMPORTANT: As of November 27, 2024, Spotify has DEPRECATED this endpoint. It may be removed in future updates. " +
+      "For more details, visit: https://developer.spotify.com/blog/2024-11-27-changes-to-the-web-api"
+    );
+    
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/audio-analysis/' + trackId)
       .build()
@@ -761,6 +779,7 @@ SpotifyWebApi.prototype = {
 
   /**
    * Get audio features for multiple tracks identified by their unique Spotify ID.
+   * @deprecated As of November 27 Spotify DEPRECATED this ENDPOINT and can be removed in future. (https://developer.spotify.com/blog/2024-11-27-changes-to-the-web-api)
    * @param {string[]} trackIds The track IDs
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @example getAudioFeaturesForTracks(['38P3Q4QcdjQALGF2Z92BmR', '2HO2bnoMrpnZUbUqiilLHi']).then(...)
@@ -769,6 +788,11 @@ SpotifyWebApi.prototype = {
    *          rejected, it contains an error object. Not returned if a callback is given.
    */
   getAudioFeaturesForTracks: function (trackIds, callback) {
+    console.warn(
+      "IMPORTANT: As of November 27, 2024, Spotify has DEPRECATED this endpoint. It may be removed in future updates. " +
+      "For more details, visit: https://developer.spotify.com/blog/2024-11-27-changes-to-the-web-api"
+    );
+    
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/audio-features')
       .withQueryParameters({
@@ -780,6 +804,7 @@ SpotifyWebApi.prototype = {
 
   /**
    * Create a playlist-style listening experience based on seed artists, tracks and genres.
+   * @deprecated As of November 27 Spotify DEPRECATED this ENDPOINT and can be removed in future. (https://developer.spotify.com/blog/2024-11-27-changes-to-the-web-api)
    * @param {Object} [options] The options supplied to this request.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @example getRecommendations({ min_energy: 0.4, seed_artists: ['6mfK6Q2tzLMEchAr0e9Uzu', '4DYFVNKZ1uixa6SQTvzQwJ'], min_popularity: 50 }).then(...)
@@ -787,6 +812,11 @@ SpotifyWebApi.prototype = {
    *          a list of tracks and a list of seeds. If rejected, it contains an error object. Not returned if a callback is given.
    */
   getRecommendations: function (options, callback) {
+    console.warn(
+      "IMPORTANT: As of November 27, 2024, Spotify has DEPRECATED this endpoint. It may be removed in future updates. " +
+      "For more details, visit: https://developer.spotify.com/blog/2024-11-27-changes-to-the-web-api"
+    );
+    
     var _opts = {};
     var optionsOfTypeArray = ['seed_artists', 'seed_genres', 'seed_tracks'];
     for (var option in options) {
@@ -1455,12 +1485,18 @@ SpotifyWebApi.prototype = {
 
   /**
    * Retrieve featured playlists
+   * @deprecated As of November 27 Spotify DEPRECATED this ENDPOINT and can be removed in future. (https://developer.spotify.com/blog/2024-11-27-changes-to-the-web-api)
    * @param {Object} [options] Options, being country, locale, timestamp, limit, offset.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @returns {Promise|undefined} A promise that if successful, resolves to an object containing a paging object which contains
    * featured playlists. Not returned if a callback is given.
    */
   getFeaturedPlaylists: function (options, callback) {
+    console.warn(
+      "IMPORTANT: As of November 27, 2024, Spotify has DEPRECATED this endpoint. It may be removed in future updates. " +
+      "For more details, visit: https://developer.spotify.com/blog/2024-11-27-changes-to-the-web-api"
+    );
+    
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/browse/featured-playlists')
       .withQueryParameters(options)
@@ -1501,6 +1537,7 @@ SpotifyWebApi.prototype = {
 
   /**
    * Retrieve playlists for a category.
+   * @deprecated As of November 27 Spotify DEPRECATED this ENDPOINT and can be removed in future. (https://developer.spotify.com/blog/2024-11-27-changes-to-the-web-api)
    * @param {string} categoryId The id of the category to retrieve playlists for.
    * @param {Object} [options] Options, being country, limit, offset.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
@@ -1508,6 +1545,10 @@ SpotifyWebApi.prototype = {
    * Not returned if a callback is given.
    */
   getPlaylistsForCategory: function (categoryId, options, callback) {
+    console.warn(
+      "IMPORTANT: As of November 27, 2024, Spotify has DEPRECATED this endpoint. It may be removed in future updates. " +
+      "For more details, visit: https://developer.spotify.com/blog/2024-11-27-changes-to-the-web-api"
+    );
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/browse/categories/' + categoryId + '/playlists')
       .withQueryParameters(options)
