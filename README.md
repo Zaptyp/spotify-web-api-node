@@ -1,9 +1,9 @@
 > [!IMPORTANT]  
 > **THIS PROJECT IS NOT A CONTINUATION OF THE > SPOTIFY WEB > API NODE IT IS ONLY USED FOR MY ONE PROJECT > AND WILL NOT > BE SUPPORTED WHEN YOU HAVE A PROBLEM WITH > IT!!!**
 
-[![Tests](https://travis-ci.org/thelinmichael/spotify-web-api-node.svg?branch=master)](https://travis-ci.org/thelinmichael/spotify-web-api-node)
-[![Coverage Status](https://coveralls.io/repos/thelinmichael/spotify-web-api-node/badge.svg)](https://coveralls.io/r/thelinmichael/spotify-web-api-node)
-[![npm bundle size (minified + gzip)](https://img.shields.io/bundlephobia/minzip/spotify-web-api-node.svg)](https://bundlephobia.com/result?p=spotify-web-api-node)
+[![Tests](https://img.shields.io/github/actions/workflow/status/Zaptyp/spotify-web-api-node/tester.yml?style=flat)](https://github.com/Zaptyp/spotify-web-api-node/actions)
+[![Coverage Status](https://img.shields.io/coverallsCoverage/github/Zaptyp/spotify-web-api-node?style=flat)](https://coveralls.io/github/Zaptyp/spotify-web-api-node)
+[![Github repository size](https://img.shields.io/github/repo-size/Zaptyp/spotify-web-api-node?style=flat)]()
 
 This is a universal wrapper/client for the [Spotify Web API](https://developer.spotify.com/web-api/) that runs on Node.JS and the browser, using [browserify](http://browserify.org/)/[webpack](https://webpack.github.io/)/[rollup](http://rollupjs.org/). A list of selected wrappers for different languages and environments is available at the Developer site's [Libraries page](https://developer.spotify.com/documentation/web-api/libraries/).
 
@@ -54,7 +54,7 @@ The library includes helper functions to do the following:
 #### Your Music library
 
 * Add, remove, and get tracks and albums that are in the signed in user's Your Music library
-* Check if a track or album is in the signed in user's Your Music library 
+* Check if a track or album is in the signed in user's Your Music library
 
 #### Personalization
 
@@ -75,14 +75,14 @@ The library includes helper functions to do the following:
 * Get a User's Available Devices
 * Get Information About The User's Current Playback State
 * Get Current User's Recently Played Tracks
-* Get the User's Currently Playing Track 
+* Get the User's Currently Playing Track
 * Pause a User's Playback
 * Seek To Position In Currently Playing Track
 * Set Repeat Mode On User’s Playback
 * Set Volume For User's Playback
 * Skip User’s Playback To Next Track
-* Skip User’s Playback To Previous Track 
-* Start/Resume a User's Playback 
+* Skip User’s Playback To Previous Track
+* Start/Resume a User's Playback
 * Toggle Shuffle For User’s Playback
 * Transfer a User's Playback
 
