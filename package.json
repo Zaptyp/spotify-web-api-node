@@ -24,10 +24,12 @@
   },
   "jest": {
     "verbose": true,
-    "testURL": "http://localhost/",
     "setupFiles": [
       "./setupJest.js"
-    ]
+    ],
+    "testEnvironmentOptions": {
+      "url": "http://localhost/"
+    }
   },
   "lint-staged": {
     "*.{js,json,css,md}": [
