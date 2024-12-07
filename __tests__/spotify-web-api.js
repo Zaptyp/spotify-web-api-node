@@ -4608,43 +4608,44 @@ describe('Spotify Web API', () => {
   });
 
   test("testing adding to a user's playback queue", done => {
-    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
-      method,
-      options,
-      uri,
-      callback
-    ) {
-      expect(method).toBe(superagent.post);
-      expect(uri).toBe("https://api.spotify.com/v1/me/player/queue");
-      expect(options.query).toEqual({
-        uri: "spotify:track:2ouFrmMwYik8nQX2n9SeZu"
-      });
-      expect(options.headers).toEqual({
-        Authorization: 'Bearer someAccessToken'
-      });
-      callback(null, null);
+    fetch.mockResponse(async req => {
+      expect(req.method).toBe("POST");
+      expect(req.url).toBe("https://api.spotify.com/v1/me/player/queue?uri=%22spotify%3Atrack%3A2ouFrmMwYik8nQX2n9SeZu%22");
+      expect(req.headers.get('authorization')).toEqual(
+        'Bearer someAccessToken'
+      );
+      return {
+        status: 204
+      };
     });
 
     var api = new SpotifyWebApi({
       accessToken: 'someAccessToken'
     });
 
-    api.addToPlaybackQueue("spotify:track:2ouFrmMwYik8nQX2n9SeZu").then(done);
+    api.addToPlaybackQueue("spotify:track:2ouFrmMwYik8nQX2n9SeZu").then(
+      function(data) {
+        done();
+      },
+    );
   });
 
 
   test("testing getting available markets", done => {
-    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
-      method,
-      options,
-      uri,
-      callback
-    ) {
-      expect(method).toBe(superagent.post);
-      expect(uri).toBe("https://api.spotify.com/v1/markets");
-      expect(options.query).toBeFalsy();
-      expect(options.data).toBeFalsy();
-      callback(null, null);
+    fetch.mockResponse(async req => {
+      expect(req.method).toBe("GET");
+      expect(req.url).toBe("https://api.spotify.com/v1/markets");
+      expect(req.query).toBeFalsy();
+      expect(req.data).toBeFalsy();
+      return {
+        status: 200,
+        headers: {
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify({
+          markets: ["CA", "BR", "IT"]
+        })
+      };
     });
 
     var api = new SpotifyWebApi();
@@ -4661,35 +4662,36 @@ describe('Spotify Web API', () => {
   });
 
   test("testing getting a playlist cover image", done => {
-    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
-      method,
-      options,
-      uri,
-      callback
-    ) {
-      expect(method).toBe(superagent.get);
-      expect(uri).toBe(
+    fetch.mockResponse(async req => {
+      expect(req.method).toBe("GET");
+      expect(req.url).toBe(
         'https://api.spotify.com/v1/playlists/3cEYpjA9oz9GiPac4AsH4n/images'
       );
-      expect(options.query).toBeFalsy();
-      callback(null, {
-        body: {
-          uri: 'spotify:playlist:3cEYpjA9oz9GiPac4AsH4n'
+      expect(req.query).toBeFalsy();
+      return {
+        status: 200,
+        headers: {
+          'content-type': 'application/json'
         },
-        statusCode: 200
-      });
+        body: JSON.stringify({
+          url: "https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb8d0ce13d55f634e290f744ba",
+          height: null,
+          width: null
+        }),
+      };
     });
 
-    var api = new SpotifyWebApi();
+    var api = new SpotifyWebApi({});
     api.setAccessToken('myVeryVeryLongAccessToken');
 
-    api.getPlaylistCoverImage("3cEYpjA9oz9GiPac4AsH4n", {}, function(err, data) {
-      expect(data.body.uri).toBe('spotify:playlist:3cEYpjA9oz9GiPac4AsH4n');
-      expect(data.statusCode).toBe(200);
-      expect(data.body).toBe(!null);
-      expect(data.body[0].url).toBe("https://i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228")
-      done();
-    });
+    api.getPlaylistCoverImage("3cEYpjA9oz9GiPac4AsH4n")
+      .then(function(data) {
+        expect(data.statusCode).toBe(200);
+        expect(data.body.height).toBe(null);
+        expect(data.body.width).toBe(null);
+        expect(data.body.url).toBe("https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb8d0ce13d55f634e290f744ba")
+        done();
+      })
   });
 
 
