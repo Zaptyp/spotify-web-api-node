@@ -5,7 +5,8 @@ var {
   WebapiError,
   WebapiRegularError,
   WebapiAuthenticationError,
-  WebapiPlayerError
+  WebapiPlayerError,
+  WebapiRatelimitError
 } = require('./response-error');
 
 var HttpManager = {};
@@ -71,6 +72,10 @@ var _toError = async function (response) {
       response.headers,
       response.status
     );
+  }
+
+  if (response.status === 429) {
+    return new WebapiRatelimitError(body, response.headers, response.status);
   }
 
   /* Other type of error, or unhandled Web API error format */

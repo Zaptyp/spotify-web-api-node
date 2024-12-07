@@ -13,6 +13,15 @@ class TimeoutError extends NamedError {
   }
 }
 
+class WebapiRatelimitError extends NamedError {
+  constructor(body, headers, statusCode) {
+    const message = `Spotify API rate limit exceeded. Retry after ${headers.get('Retry-After')} seconds`;
+    super(message);
+    this.body = body;
+    this.statusCode = statusCode;
+  }
+}
+
 /* Web API Parent and fallback error */
 class WebapiError extends NamedError {
   constructor(body, headers, statusCode, message) {
@@ -76,5 +85,6 @@ module.exports = {
   TimeoutError,
   WebapiRegularError,
   WebapiAuthenticationError,
-  WebapiPlayerError
+  WebapiPlayerError,
+  WebapiRatelimitError
 };
