@@ -129,14 +129,14 @@ This project depends on [superagent](https://github.com/visionmedia/superagent) 
 
 ## Installation
 
-    $ npm install spotify-web-api-node --save
+    $ npm install @zaptyp/spotify-web-api-node --save
 
 ## Usage
 
 First, instantiate the wrapper.
 
 ```javascript
-var SpotifyWebApi = require('spotify-web-api-node');
+var SpotifyWebApi = require('@zaptyp/spotify-web-api-node');
 
 // credentials are optional
 var spotifyApi = new SpotifyWebApi({
@@ -249,7 +249,7 @@ Retrieving a track's metadata in `spotify-web-api-node` version 1.4.0 and later:
 Below are examples for all helper functions. Longer examples of some requests can be found in the [examples folder](examples/). 
 
 ```javascript
-var SpotifyWebApi = require('spotify-web-api-node');
+var SpotifyWebApi = require('@zaptyp/spotify-web-api-node');
 
 var spotifyApi = new SpotifyWebApi();
 
