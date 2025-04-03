@@ -4,3 +4,11 @@ node_modules
 .coveralls.yml
 .npmignore
 *.log
+examples
+coverage
+.github
+.prettierignore
+.travis.yml
+CHANGELOG.md
+.gitignore
+setupJest.js
