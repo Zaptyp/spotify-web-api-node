@@ -1,6 +1,6 @@
 {
   "name": "@zaptyp/spotify-web-api-node",
-  "version": "5.1.0",
+  "version": "5.1.1",
   "homepage": "https://github.com/Zaptyp/spotify-web-api-node",
   "description": "A Node.js wrapper for Spotify's Web API",
   "main": "./src/server.js",
