@@ -6,6 +6,7 @@
   "main": "./src/server.js",
   "author": "Zaptyp",
   "license": "MIT",
+  "types": "node_modules/@types/spotify-web-api-node/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Zaptyp/spotify-web-api-node.git"
