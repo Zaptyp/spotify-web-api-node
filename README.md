@@ -35,7 +35,7 @@ The library includes helper functions to do the following:
 
 #### Profiles
 
-* User's emails, product type, display name, birthdate, image
+* User's display name, birthdate, image
 
 #### Search
 
