@@ -106,6 +106,62 @@ SpotifyWebApi.prototype = {
     }
   },
 
+  _buildSpotifyUri: function (type, id) {
+    return 'spotify:' + type + ':' + id;
+  },
+
+  _buildSpotifyUris: function (type, ids) {
+    return ids.map(
+      function (id) {
+        return this._buildSpotifyUri(type, id);
+      }.bind(this)
+    );
+  },
+
+  _createMissingPlaylistItemsError: function (playlistId, result) {
+    var error = new Error(
+      'Playlist contents are unavailable for this request. ' +
+        'Spotify returns playlist items only for playlists owned by the current user ' +
+        'or playlists where the user is a collaborator.'
+    );
+
+    error.code = 'PLAYLIST_ITEMS_UNAVAILABLE';
+    error.playlistId = playlistId;
+    error.statusCode = result && result.statusCode;
+    error.body = result && result.body;
+    error.headers = result && result.headers;
+
+    return error;
+  },
+
+  addToMyLibrary: function (uris, callback) {
+    return WebApiRequest.builder(this.getAccessToken())
+      .withPath('/v1/me/library')
+      .withHeaders({ 'Content-Type': 'application/json' })
+      .withBodyParameters({ uris: uris })
+      .build()
+      .execute(HttpManager.put, callback);
+  },
+
+  removeFromMyLibrary: function (uris, callback) {
+    return WebApiRequest.builder(this.getAccessToken())
+      .withPath('/v1/me/library')
+      .withHeaders({ 'Content-Type': 'application/json' })
+      .withBodyParameters({ uris: uris })
+      .build()
+      .execute(HttpManager.del, callback);
+  },
+
+  containsMyLibraryItems: function (uris, callback) {
+    return WebApiRequest.builder(this.getAccessToken())
+      .withPath('/v1/me/library/contains')
+      .withQueryParameters({
+        uris: uris.join(',')
+      })
+      .build()
+      .execute(HttpManager.get, callback);
+  },
+
   /**
    * Returns an object containing the playlist cover image.
    * @param {string} playlistId The ID of the associated playlist. 
@@ -298,6 +354,14 @@ SpotifyWebApi.prototype = {
    *          it contains an error object. Not returned if a callback is given.
    */
   search: function (query, types, options, callback) {
+    var validatedOptions = options || {};
+    if (
+      typeof validatedOptions.limit === 'number' &&
+      validatedOptions.limit > 10
+    ) {
+      validatedOptions.limit = 10;
+    }
+
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/search/')
       .withQueryParameters(
@@ -305,7 +369,7 @@ SpotifyWebApi.prototype = {
           type: types.join(','),
           q: query
         },
-        options
+        validatedOptions
       )
       .build()
       .execute(HttpManager.get, callback);
@@ -555,11 +619,33 @@ SpotifyWebApi.prototype = {
       "IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!" +
       "For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026"
     );
-    return WebApiRequest.builder(this.getAccessToken())
-      .withPath('/v1/playlists/' + playlistId + '/tracks')
+    var request = WebApiRequest.builder(this.getAccessToken())
+      .withPath('/v1/playlists/' + playlistId + '/items')
       .withQueryParameters(options)
-      .build()
-      .execute(HttpManager.get, callback);
+      .build();
+    var _this = this;
+
+    if (callback) {
+      return request.execute(HttpManager.get, function (err, result) {
+        if (err) {
+          return callback(err);
+        }
+
+        if (result.body.items === undefined) {
+          return callback(_this._createMissingPlaylistItemsError(playlistId, result));
+        }
+
+        return callback(null, result);
+      });
+    }
+
+    return request.execute(HttpManager.get).then(function (result) {
+      if (result.body.items === undefined) {
+        throw _this._createMissingPlaylistItemsError(playlistId, result);
+      }
+
+      return result;
+    });
   },
 
   /**
@@ -600,12 +686,10 @@ SpotifyWebApi.prototype = {
       "IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!" +
       "For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026"
     );
-    return WebApiRequest.builder(this.getAccessToken())
-      .withPath('/v1/playlists/' + playlistId + '/followers')
-      .withHeaders({ 'Content-Type': 'application/json' })
-      .withBodyParameters(options)
-      .build()
-      .execute(HttpManager.put, callback);
+    return this.addToMyLibrary(
+      [this._buildSpotifyUri('playlist', playlistId)],
+      callback
+    );
   },
 
   /**
@@ -622,10 +706,10 @@ SpotifyWebApi.prototype = {
       "IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!" +
       "For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026"
     );
-    return WebApiRequest.builder(this.getAccessToken())
-      .withPath('/v1/playlists/' + playlistId + '/followers')
-      .build()
-      .execute(HttpManager.del, callback);
+    return this.removeFromMyLibrary(
+      [this._buildSpotifyUri('playlist', playlistId)],
+      callback
+    );
   },
 
   /**
@@ -683,7 +767,7 @@ SpotifyWebApi.prototype = {
       "For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026"
     );
     return WebApiRequest.builder(this.getAccessToken())
-      .withPath('/v1/playlists/' + playlistId + '/tracks')
+      .withPath('/v1/playlists/' + playlistId + '/items')
       .withHeaders({ 'Content-Type': 'application/json' })
       .withQueryParameters(options)
       .withBodyParameters({
@@ -711,11 +795,11 @@ SpotifyWebApi.prototype = {
       "For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026"
     );
     return WebApiRequest.builder(this.getAccessToken())
-      .withPath('/v1/playlists/' + playlistId + '/tracks')
+      .withPath('/v1/playlists/' + playlistId + '/items')
       .withHeaders({ 'Content-Type': 'application/json' })
       .withBodyParameters(
         {
-          tracks: tracks
+          items: tracks
         },
         options
       )
@@ -739,7 +823,7 @@ SpotifyWebApi.prototype = {
     callback
   ) {
     return WebApiRequest.builder(this.getAccessToken())
-      .withPath('/v1/playlists/' + playlistId + '/tracks')
+      .withPath('/v1/playlists/' + playlistId + '/items')
       .withHeaders({ 'Content-Type': 'application/json' })
       .withBodyParameters({
         positions: positions,
@@ -765,7 +849,7 @@ SpotifyWebApi.prototype = {
       "For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026"
     );
     return WebApiRequest.builder(this.getAccessToken())
-      .withPath('/v1/playlists/' + playlistId + '/tracks')
+      .withPath('/v1/playlists/' + playlistId + '/items')
       .withHeaders({ 'Content-Type': 'application/json' })
       .withBodyParameters({
         uris: uris
@@ -798,7 +882,7 @@ SpotifyWebApi.prototype = {
       "For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026"
     );
     return WebApiRequest.builder(this.getAccessToken())
-      .withPath('/v1/playlists/' + playlistId + '/tracks')
+      .withPath('/v1/playlists/' + playlistId + '/items')
       .withHeaders({ 'Content-Type': 'application/json' })
       .withBodyParameters(
         {
@@ -963,13 +1047,10 @@ SpotifyWebApi.prototype = {
       "IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!" +
       "For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026"
     );
-    return WebApiRequest.builder(this.getAccessToken())
-      .withPath('/v1/me/tracks/contains')
-      .withQueryParameters({
-        ids: trackIds.join(',')
-      })
-      .build()
-      .execute(HttpManager.get, callback);
+    return this.containsMyLibraryItems(
+      this._buildSpotifyUris('track', trackIds),
+      callback
+    );
   },
 
   /**
@@ -982,12 +1063,10 @@ SpotifyWebApi.prototype = {
    * Not returned if a callback is given.
    */
   removeFromMySavedTracks: function (trackIds, callback) {
-    return WebApiRequest.builder(this.getAccessToken())
-      .withPath('/v1/me/tracks')
-      .withHeaders({ 'Content-Type': 'application/json' })
-      .withBodyParameters({ ids: trackIds })
-      .build()
-      .execute(HttpManager.del, callback);
+    return this.removeFromMyLibrary(
+      this._buildSpotifyUris('track', trackIds),
+      callback
+    );
   },
 
   /**
@@ -1003,12 +1082,7 @@ SpotifyWebApi.prototype = {
       "IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!" +
       "For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026"
     );
-    return WebApiRequest.builder(this.getAccessToken())
-      .withPath('/v1/me/tracks')
-      .withHeaders({ 'Content-Type': 'application/json' })
-      .withBodyParameters({ ids: trackIds })
-      .build()
-      .execute(HttpManager.put, callback);
+    return this.addToMyLibrary(this._buildSpotifyUris('track', trackIds), callback);
   },
 
   /**
@@ -1021,12 +1095,10 @@ SpotifyWebApi.prototype = {
    * Not returned if a callback is given.
    */
   removeFromMySavedAlbums: function (albumIds, callback) {
-    return WebApiRequest.builder(this.getAccessToken())
-      .withPath('/v1/me/albums')
-      .withHeaders({ 'Content-Type': 'application/json' })
-      .withBodyParameters(albumIds)
-      .build()
-      .execute(HttpManager.del, callback);
+    return this.removeFromMyLibrary(
+      this._buildSpotifyUris('album', albumIds),
+      callback
+    );
   },
 
   /**
@@ -1042,12 +1114,7 @@ SpotifyWebApi.prototype = {
       "IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!" +
       "For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026"
     );
-    return WebApiRequest.builder(this.getAccessToken())
-      .withPath('/v1/me/albums')
-      .withHeaders({ 'Content-Type': 'application/json' })
-      .withBodyParameters(albumIds)
-      .build()
-      .execute(HttpManager.put, callback);
+    return this.addToMyLibrary(this._buildSpotifyUris('album', albumIds), callback);
   },
 
   /**
@@ -1081,13 +1148,10 @@ SpotifyWebApi.prototype = {
       "IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!" +
       "For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026"
     );
-    return WebApiRequest.builder(this.getAccessToken())
-      .withPath('/v1/me/albums/contains')
-      .withQueryParameters({
-        ids: albumIds.join(',')
-      })
-      .build()
-      .execute(HttpManager.get, callback);
+    return this.containsMyLibraryItems(
+      this._buildSpotifyUris('album', albumIds),
+      callback
+    );
   },
 
   /**
@@ -1426,14 +1490,7 @@ SpotifyWebApi.prototype = {
       "IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!" +
       "For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026"
     );
-    return WebApiRequest.builder(this.getAccessToken())
-      .withPath('/v1/me/following')
-      .withQueryParameters({
-        ids: userIds.join(','),
-        type: 'user'
-      })
-      .build()
-      .execute(HttpManager.put, callback);
+    return this.addToMyLibrary(this._buildSpotifyUris('user', userIds), callback);
   },
 
   /**
@@ -1445,14 +1502,7 @@ SpotifyWebApi.prototype = {
    *          it contains an error object. Not returned if a callback is given.
    */
   followArtists: function (artistIds, callback) {
-    return WebApiRequest.builder(this.getAccessToken())
-      .withPath('/v1/me/following')
-      .withQueryParameters({
-        ids: artistIds.join(','),
-        type: 'artist'
-      })
-      .build()
-      .execute(HttpManager.put, callback);
+    return this.addToMyLibrary(this._buildSpotifyUris('artist', artistIds), callback);
   },
 
   /**
@@ -1464,14 +1514,7 @@ SpotifyWebApi.prototype = {
    *          it contains an error object. Not returned if a callback is given.
    */
   unfollowUsers: function (userIds, callback) {
-    return WebApiRequest.builder(this.getAccessToken())
-      .withPath('/v1/me/following')
-      .withQueryParameters({
-        ids: userIds.join(','),
-        type: 'user'
-      })
-      .build()
-      .execute(HttpManager.del, callback);
+    return this.removeFromMyLibrary(this._buildSpotifyUris('user', userIds), callback);
   },
 
   /**
@@ -1483,14 +1526,10 @@ SpotifyWebApi.prototype = {
    *          it contains an error object. Not returned if a callback is given.
    */
   unfollowArtists: function (artistIds, callback) {
-    return WebApiRequest.builder(this.getAccessToken())
-      .withPath('/v1/me/following')
-      .withQueryParameters({
-        ids: artistIds.join(','),
-        type: 'artist'
-      })
-      .build()
-      .execute(HttpManager.del, callback);
+    return this.removeFromMyLibrary(
+      this._buildSpotifyUris('artist', artistIds),
+      callback
+    );
   },
 
   /**
@@ -1510,14 +1549,10 @@ SpotifyWebApi.prototype = {
       "IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!" +
       "For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026"
     );
-    return WebApiRequest.builder(this.getAccessToken())
-      .withPath('/v1/me/following/contains')
-      .withQueryParameters({
-        ids: userIds.join(','),
-        type: 'user'
-      })
-      .build()
-      .execute(HttpManager.get, callback);
+    return this.containsMyLibraryItems(
+      this._buildSpotifyUris('user', userIds),
+      callback
+    );
   },
 
   /**
@@ -1588,14 +1623,10 @@ SpotifyWebApi.prototype = {
       "IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!" +
       "For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026"
     );
-    return WebApiRequest.builder(this.getAccessToken())
-      .withPath('/v1/me/following/contains')
-      .withQueryParameters({
-        ids: artistIds.join(','),
-        type: 'artist'
-      })
-      .build()
-      .execute(HttpManager.get, callback);
+    return this.containsMyLibraryItems(
+      this._buildSpotifyUris('artist', artistIds),
+      callback
+    );
   },
 
   /**
@@ -1761,13 +1792,10 @@ SpotifyWebApi.prototype = {
       "IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!" +
       "For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026"
     );
-    return WebApiRequest.builder(this.getAccessToken())
-      .withPath('/v1/me/shows/contains')
-      .withQueryParameters({
-        ids: showIds.join(',')
-      })
-      .build()
-      .execute(HttpManager.get, callback);
+    return this.containsMyLibraryItems(
+      this._buildSpotifyUris('show', showIds),
+      callback
+    );
   },
 
   /**
@@ -1784,14 +1812,7 @@ SpotifyWebApi.prototype = {
       "IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!" +
       "For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026"
     );
-    return WebApiRequest.builder(this.getAccessToken())
-      .withPath('/v1/me/shows')
-      .withHeaders({ 'Content-Type': 'application/json' })
-      .withQueryParameters({
-        ids: showIds.join(',')
-      })
-      .build()
-      .execute(HttpManager.del, callback);
+    return this.removeFromMyLibrary(this._buildSpotifyUris('show', showIds), callback);
   },
 
   /**
@@ -1807,12 +1828,7 @@ SpotifyWebApi.prototype = {
       "IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!" +
       "For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026"
     );
-    return WebApiRequest.builder(this.getAccessToken())
-      .withPath('/v1/me/shows')
-      .withHeaders({ 'Content-Type': 'application/json' })
-      .withBodyParameters(showIds)
-      .build()
-      .execute(HttpManager.put, callback);
+    return this.addToMyLibrary(this._buildSpotifyUris('show', showIds), callback);
   },
 
   /**

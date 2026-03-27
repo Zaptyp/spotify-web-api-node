@@ -604,6 +604,30 @@ declare class SpotifyWebApi {
     getAvailableGenreSeeds(): Promise<Response<SpotifyApi.AvailableGenreSeedsResponse>>;
 
     /**
+     * Save items or follows in the current user's library using Spotify URIs.
+     * @param uris The Spotify URIs to save.
+     * @param callback Optional callback method to be called instead of the promise.
+     */
+    addToMyLibrary(uris: readonly string[], callback: Callback<void>): void;
+    addToMyLibrary(uris: readonly string[]): Promise<Response<void>>;
+
+    /**
+     * Remove items or unfollows from the current user's library using Spotify URIs.
+     * @param uris The Spotify URIs to remove.
+     * @param callback Optional callback method to be called instead of the promise.
+     */
+    removeFromMyLibrary(uris: readonly string[], callback: Callback<void>): void;
+    removeFromMyLibrary(uris: readonly string[]): Promise<Response<void>>;
+
+    /**
+     * Check whether Spotify URIs are in the current user's library.
+     * @param uris The Spotify URIs to check.
+     * @param callback Optional callback method to be called instead of the promise.
+     */
+    containsMyLibraryItems(uris: readonly string[], callback: Callback<boolean[]>): void;
+    containsMyLibraryItems(uris: readonly string[]): Promise<Response<boolean[]>>;
+
+    /**
      * Retrieve the tracks that are saved to the authenticated users Your Music library.
      * @param options Options, being market, limit, and/or offset.
      * @param callback Optional callback method to be called instead of the promise.
