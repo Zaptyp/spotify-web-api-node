@@ -810,6 +810,36 @@ describe('Spotify Web API', () => {
     );
   });
 
+  test('should cap search limit to 10', done => {
+    fetch.mockResponse(async req => {
+      const url = new URL(req.url);
+      expect(url.pathname).toBe('/v1/search/');
+      expect(url.searchParams.get('q')).toBe('Keane');
+      expect(url.searchParams.get('type')).toBe('album');
+      expect(url.searchParams.get('limit')).toBe('10');
+      expect(url.searchParams.get('offset')).toBe('0');
+      expect(req.method).toBe('GET');
+
+      return {
+        status: 200,
+        headers: {
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify({ albums: { items: [] } })
+      };
+    });
+
+    var api = new SpotifyWebApi();
+    api.searchAlbums('Keane', { limit: 50, offset: 0 }).then(
+      function(data) {
+        done();
+      },
+      function(err) {
+        done(err);
+      }
+    );
+  });
+
   test('should get artists albums', done => {
     fetch.mockResponse(async req => {
       const url = new URL(req.url);
@@ -1492,7 +1522,7 @@ describe('Spotify Web API', () => {
     fetch.mockResponse(async req => {
       expect(req.method).toBe('POST');
       expect(req.url).toBe(
-        'https://api.spotify.com/v1/playlists/5ieJqeLJjjI8iJWaxeBLuK/tracks'
+        'https://api.spotify.com/v1/playlists/5ieJqeLJjjI8iJWaxeBLuK/items'
       );
       expect(req.headers.get('content-type')).toBe('application/json');
       expect(JSON.parse(req.body)).toEqual({
@@ -1531,7 +1561,7 @@ describe('Spotify Web API', () => {
     fetch.mockResponse(async req => {
       const url = new URL(req.url);
       expect(req.method).toBe('POST');
-      expect(url.pathname).toBe('/v1/playlists/5ieJqeLJjjI8iJWaxeBLuK/tracks');
+      expect(url.pathname).toBe('/v1/playlists/5ieJqeLJjjI8iJWaxeBLuK/items');
       expect(req.headers.get('content-type')).toBe('application/json');
       expect(JSON.parse(req.body)).toEqual({
         uris: [
@@ -1576,7 +1606,7 @@ describe('Spotify Web API', () => {
     fetch.mockResponse(async req => {
       const url = new URL(req.url);
       expect(req.method).toBe('GET');
-      expect(url.pathname).toBe('/v1/playlists/3iV5W9uYEdYUVa79Axb7Rh/tracks');
+      expect(url.pathname).toBe('/v1/playlists/3iV5W9uYEdYUVa79Axb7Rh/items');
       expect(url.searchParams.get('limit')).toEqual('5');
       expect(url.searchParams.get('offset')).toEqual('1');
       expect(url.searchParams.get('market')).toEqual('SE');
@@ -1589,7 +1619,7 @@ describe('Spotify Web API', () => {
         headers: {
           'content-type': 'application/json'
         },
-        body: JSON.stringify({})
+        body: JSON.stringify({ items: [] })
       };
     });
 
@@ -1606,6 +1636,66 @@ describe('Spotify Web API', () => {
       .then(function(data) {
         done();
       });
+  });
+
+  test('should fail when playlist items are missing and items are expected', done => {
+    fetch.mockResponse(async req => {
+      const url = new URL(req.url);
+      expect(req.method).toBe('GET');
+      expect(url.pathname).toBe('/v1/playlists/3iV5W9uYEdYUVa79Axb7Rh/items');
+      expect(req.body).toBeFalsy();
+
+      return {
+        status: 200,
+        headers: {
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify({
+          total: 10
+        })
+      };
+    });
+
+    var api = new SpotifyWebApi();
+
+    api.getPlaylistTracks('3iV5W9uYEdYUVa79Axb7Rh').then(
+      function(data) {
+        done(new Error('Test failed!'));
+      },
+      function(err) {
+        expect(err.code).toBe('PLAYLIST_ITEMS_UNAVAILABLE');
+        expect(err.playlistId).toBe('3iV5W9uYEdYUVa79Axb7Rh');
+        done();
+      }
+    );
+  });
+
+  test('should fail in callback when playlist items are missing and items are expected', done => {
+    fetch.mockResponse(async req => {
+      const url = new URL(req.url);
+      expect(req.method).toBe('GET');
+      expect(url.pathname).toBe('/v1/playlists/3iV5W9uYEdYUVa79Axb7Rh/items');
+      expect(req.body).toBeFalsy();
+
+      return {
+        status: 200,
+        headers: {
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify({
+          total: 10
+        })
+      };
+    });
+
+    var api = new SpotifyWebApi();
+
+    api.getPlaylistTracks('3iV5W9uYEdYUVa79Axb7Rh', {}, function(err, data) {
+      expect(data).toBeUndefined();
+      expect(err.code).toBe('PLAYLIST_ITEMS_UNAVAILABLE');
+      expect(err.playlistId).toBe('3iV5W9uYEdYUVa79Axb7Rh');
+      done();
+    });
   });
 
   /* Upload a Custom Playlist Cover Image */
@@ -2342,10 +2432,10 @@ describe('Spotify Web API', () => {
   test('should remove tracks in the users library', done => {
     fetch.mockResponse(async req => {
       expect(req.method).toBe('DELETE');
-      expect(req.url).toBe('https://api.spotify.com/v1/me/tracks');
+      expect(req.url).toBe('https://api.spotify.com/v1/me/library');
       expect(req.headers.get('authorization')).toBe('Bearer myAccessToken');
       expect(JSON.parse(req.body)).toEqual({
-        ids: ['3VNWq8rTnQG6fM1eldSpZ0']
+        uris: ['spotify:track:3VNWq8rTnQG6fM1eldSpZ0']
       });
 
       return {
@@ -2412,9 +2502,9 @@ describe('Spotify Web API', () => {
     fetch.mockResponse(async req => {
       const url = new URL(req.url);
       expect(req.method).toBe('GET');
-      expect(url.pathname).toBe('/v1/me/tracks/contains');
-      expect(url.searchParams.get('ids')).toBe(
-        '27cZdqrQiKt3IT00338dws,37cZdqrQiKt3IT00338dzs'
+      expect(url.pathname).toBe('/v1/me/library/contains');
+      expect(url.searchParams.get('uris')).toBe(
+        'spotify:track:27cZdqrQiKt3IT00338dws,spotify:track:37cZdqrQiKt3IT00338dzs'
       );
       expect(req.headers.get('authorization')).toBe('Bearer myAccessToken');
 
@@ -2451,9 +2541,11 @@ describe('Spotify Web API', () => {
   test('should remove albums in the users library', done => {
     fetch.mockResponse(async req => {
       expect(req.method).toBe('DELETE');
-      expect(req.url).toBe('https://api.spotify.com/v1/me/albums');
+      expect(req.url).toBe('https://api.spotify.com/v1/me/library');
       expect(req.headers.get('authorization')).toBe('Bearer myAccessToken');
-      expect(JSON.parse(req.body)).toEqual(['27cZdqrQiKt3IT00338dws']);
+      expect(JSON.parse(req.body)).toEqual({
+        uris: ['spotify:album:27cZdqrQiKt3IT00338dws']
+      });
 
       return {
         status: 204
@@ -2479,13 +2571,15 @@ describe('Spotify Web API', () => {
   test('should add albums to the users library', done => {
     fetch.mockResponse(async req => {
       expect(req.method).toBe('PUT');
-      expect(req.url).toBe('https://api.spotify.com/v1/me/albums');
+      expect(req.url).toBe('https://api.spotify.com/v1/me/library');
       expect(req.headers.get('authorization')).toBe('Bearer myAccessToken');
       expect(req.headers.get('content-type')).toBe('application/json');
-      expect(JSON.parse(req.body)).toEqual([
-        '4iV5W9uYEdYUVa79Axb7Rh',
-        '1301WleyT98MSxVHPZCA6M'
-      ]);
+      expect(JSON.parse(req.body)).toEqual({
+        uris: [
+          'spotify:album:4iV5W9uYEdYUVa79Axb7Rh',
+          'spotify:album:1301WleyT98MSxVHPZCA6M'
+        ]
+      });
 
       return {
         status: 200
@@ -2562,8 +2656,10 @@ describe('Spotify Web API', () => {
     fetch.mockResponse(async req => {
       const url = new URL(req.url);
       expect(req.method).toBe('GET');
-      expect(url.pathname).toBe('/v1/me/albums/contains');
-      expect(url.searchParams.get('ids')).toBe('27cZdqrQiKt3IT00338dws');
+      expect(url.pathname).toBe('/v1/me/library/contains');
+      expect(url.searchParams.get('uris')).toBe(
+        'spotify:album:27cZdqrQiKt3IT00338dws'
+      );
       expect(req.headers.get('authorization')).toBe('Bearer myAccessToken');
 
       return {
@@ -2600,12 +2696,12 @@ describe('Spotify Web API', () => {
     fetch.mockResponse(async req => {
       expect(req.method).toBe('PUT');
       expect(req.url).toBe(
-        'https://api.spotify.com/v1/playlists/7p9EIC2KW0NNkTEOnTUZJl/followers'
+        'https://api.spotify.com/v1/me/library'
       );
       expect(req.headers.get('authorization')).toBe('Bearer myAccessToken');
       expect(req.headers.get('content-type')).toBe('application/json');
       expect(JSON.parse(req.body)).toEqual({
-        public: false
+        uris: ['spotify:playlist:7p9EIC2KW0NNkTEOnTUZJl']
       });
 
       return {
@@ -2636,11 +2732,11 @@ describe('Spotify Web API', () => {
   test('should unfollow a playlist', done => {
     fetch.mockResponse(async req => {
       expect(req.method).toBe('DELETE');
-      expect(req.url).toBe(
-        'https://api.spotify.com/v1/playlists/7p9EIC2KW0NNkTEOnTUZJl/followers'
-      );
+      expect(req.url).toBe('https://api.spotify.com/v1/me/library');
       expect(req.headers.get('authorization')).toBe('Bearer myAccessToken');
-      expect(req.body).toBeFalsy();
+      expect(JSON.parse(req.body)).toEqual({
+        uris: ['spotify:playlist:7p9EIC2KW0NNkTEOnTUZJl']
+      });
 
       return {
         status: 200
@@ -2667,10 +2763,12 @@ describe('Spotify Web API', () => {
     fetch.mockResponse(async req => {
       const url = new URL(req.url);
       expect(req.method).toBe('PUT');
-      expect(url.pathname).toBe('/v1/me/following');
-      expect(url.searchParams.get('type')).toBe('user');
-      expect(url.searchParams.get('ids')).toBe('thelinmichael,wizzler');
+      expect(url.pathname).toBe('/v1/me/library');
+      expect(url.search).toBe('');
       expect(req.headers.get('authorization')).toBe('Bearer myAccessToken');
+      expect(JSON.parse(req.body)).toEqual({
+        uris: ['spotify:user:thelinmichael', 'spotify:user:wizzler']
+      });
 
       return {
         status: 200
@@ -2697,10 +2795,12 @@ describe('Spotify Web API', () => {
     fetch.mockResponse(async req => {
       const url = new URL(req.url);
       expect(req.method).toBe('PUT');
-      expect(url.pathname).toBe('/v1/me/following');
-      expect(url.searchParams.get('type')).toBe('user');
-      expect(url.searchParams.get('ids')).toBe('thelinmichael,wizzler');
+      expect(url.pathname).toBe('/v1/me/library');
+      expect(url.search).toBe('');
       expect(req.headers.get('authorization')).toBe('Bearer myAccessToken');
+      expect(JSON.parse(req.body)).toEqual({
+        uris: ['spotify:user:thelinmichael', 'spotify:user:wizzler']
+      });
 
       return {
         status: 200
@@ -2723,11 +2823,12 @@ describe('Spotify Web API', () => {
     fetch.mockResponse(async req => {
       const url = new URL(req.url);
       expect(req.method).toBe('PUT');
-      expect(url.pathname).toBe('/v1/me/following');
-      expect(url.searchParams.get('type')).toBe('artist');
-      expect(url.searchParams.get('ids')).toBe('137W8MRPWKqSmrBGDBFSop');
+      expect(url.pathname).toBe('/v1/me/library');
+      expect(url.search).toBe('');
       expect(req.headers.get('authorization')).toBe('Bearer myAccessToken');
-      expect(req.body).toBeFalsy();
+      expect(JSON.parse(req.body)).toEqual({
+        uris: ['spotify:artist:137W8MRPWKqSmrBGDBFSop']
+      });
 
       return {
         status: 200
@@ -2755,11 +2856,12 @@ describe('Spotify Web API', () => {
     fetch.mockResponse(async req => {
       const url = new URL(req.url);
       expect(req.method).toBe('PUT');
-      expect(url.pathname).toBe('/v1/me/following');
-      expect(url.searchParams.get('type')).toBe('artist');
-      expect(url.searchParams.get('ids')).toBe('137W8MRPWKqSmrBGDBFSop');
+      expect(url.pathname).toBe('/v1/me/library');
+      expect(url.search).toBe('');
       expect(req.headers.get('authorization')).toBe('Bearer myAccessToken');
-      expect(req.body).toBeFalsy();
+      expect(JSON.parse(req.body)).toEqual({
+        uris: ['spotify:artist:137W8MRPWKqSmrBGDBFSop']
+      });
 
       return {
         status: 200
@@ -2781,10 +2883,11 @@ describe('Spotify Web API', () => {
     fetch.mockResponse(async req => {
       const url = new URL(req.url);
       expect(req.method).toBe('DELETE');
-      expect(url.pathname).toBe('/v1/me/following');
-      expect(url.searchParams.get('type')).toBe('user');
-      expect(url.searchParams.get('ids')).toBe('thelinmichael,wizzler');
-      expect(req.body).toBeFalsy();
+      expect(url.pathname).toBe('/v1/me/library');
+      expect(url.search).toBe('');
+      expect(JSON.parse(req.body)).toEqual({
+        uris: ['spotify:user:thelinmichael', 'spotify:user:wizzler']
+      });
 
       return {
         status: 200
@@ -2811,10 +2914,11 @@ describe('Spotify Web API', () => {
     fetch.mockResponse(async req => {
       const url = new URL(req.url);
       expect(req.method).toBe('DELETE');
-      expect(url.pathname).toBe('/v1/me/following');
-      expect(url.searchParams.get('type')).toBe('user');
-      expect(url.searchParams.get('ids')).toBe('thelinmichael,wizzler');
-      expect(req.body).toBeFalsy();
+      expect(url.pathname).toBe('/v1/me/library');
+      expect(url.search).toBe('');
+      expect(JSON.parse(req.body)).toEqual({
+        uris: ['spotify:user:thelinmichael', 'spotify:user:wizzler']
+      });
 
       return {
         status: 200
@@ -2836,10 +2940,11 @@ describe('Spotify Web API', () => {
     fetch.mockResponse(async req => {
       const url = new URL(req.url);
       expect(req.method).toBe('DELETE');
-      expect(url.pathname).toBe('/v1/me/following');
-      expect(url.searchParams.get('type')).toBe('artist');
-      expect(url.searchParams.get('ids')).toBe('137W8MRPWKqSmrBGDBFSop');
-      expect(req.body).toBeFalsy();
+      expect(url.pathname).toBe('/v1/me/library');
+      expect(url.search).toBe('');
+      expect(JSON.parse(req.body)).toEqual({
+        uris: ['spotify:artist:137W8MRPWKqSmrBGDBFSop']
+      });
 
       return {
         status: 200
@@ -2866,10 +2971,11 @@ describe('Spotify Web API', () => {
     fetch.mockResponse(async req => {
       const url = new URL(req.url);
       expect(req.method).toBe('DELETE');
-      expect(url.pathname).toBe('/v1/me/following');
-      expect(url.searchParams.get('type')).toBe('artist');
-      expect(url.searchParams.get('ids')).toBe('137W8MRPWKqSmrBGDBFSop');
-      expect(req.body).toBeFalsy();
+      expect(url.pathname).toBe('/v1/me/library');
+      expect(url.search).toBe('');
+      expect(JSON.parse(req.body)).toEqual({
+        uris: ['spotify:artist:137W8MRPWKqSmrBGDBFSop']
+      });
 
       return {
         status: 200
@@ -2892,9 +2998,10 @@ describe('Spotify Web API', () => {
     fetch.mockResponse(async req => {
       const url = new URL(req.url);
       expect(req.method).toBe('GET');
-      expect(url.pathname).toBe('/v1/me/following/contains');
-      expect(url.searchParams.get('type')).toBe('user');
-      expect(url.searchParams.get('ids')).toBe('thelinmichael,wizzler');
+      expect(url.pathname).toBe('/v1/me/library/contains');
+      expect(url.searchParams.get('uris')).toBe(
+        'spotify:user:thelinmichael,spotify:user:wizzler'
+      );
 
       return {
         status: 200,
@@ -2927,9 +3034,10 @@ describe('Spotify Web API', () => {
     fetch.mockResponse(async req => {
       const url = new URL(req.url);
       expect(req.method).toBe('GET');
-      expect(url.pathname).toBe('/v1/me/following/contains');
-      expect(url.searchParams.get('type')).toBe('user');
-      expect(url.searchParams.get('ids')).toBe('thelinmichael,wizzler');
+      expect(url.pathname).toBe('/v1/me/library/contains');
+      expect(url.searchParams.get('uris')).toBe(
+        'spotify:user:thelinmichael,spotify:user:wizzler'
+      );
 
       return {
         status: 200,
@@ -2957,9 +3065,10 @@ describe('Spotify Web API', () => {
     fetch.mockResponse(async req => {
       const url = new URL(req.url);
       expect(req.method).toBe('GET');
-      expect(url.pathname).toBe('/v1/me/following/contains');
-      expect(url.searchParams.get('type')).toBe('artist');
-      expect(url.searchParams.get('ids')).toBe('137W8MRPWKqSmrBGDBFSop');
+      expect(url.pathname).toBe('/v1/me/library/contains');
+      expect(url.searchParams.get('uris')).toBe(
+        'spotify:artist:137W8MRPWKqSmrBGDBFSop'
+      );
 
       return {
         status: 200,
@@ -2992,9 +3101,10 @@ describe('Spotify Web API', () => {
     fetch.mockResponse(async req => {
       const url = new URL(req.url);
       expect(req.method).toBe('GET');
-      expect(url.pathname).toBe('/v1/me/following/contains');
-      expect(url.searchParams.get('type')).toBe('artist');
-      expect(url.searchParams.get('ids')).toBe('137W8MRPWKqSmrBGDBFSop');
+      expect(url.pathname).toBe('/v1/me/library/contains');
+      expect(url.searchParams.get('uris')).toBe(
+        'spotify:artist:137W8MRPWKqSmrBGDBFSop'
+      );
 
       return {
         status: 200,
@@ -3128,7 +3238,7 @@ describe('Spotify Web API', () => {
     fetch.mockResponse(async req => {
       expect(req.method).toBe('POST');
       expect(req.url).toBe(
-        'https://api.spotify.com/v1/playlists/5ieJqeLJjjI8iJWaxeBLuK/tracks'
+        'https://api.spotify.com/v1/playlists/5ieJqeLJjjI8iJWaxeBLuK/items'
       );
       expect(req.headers.get('Authorization')).toBe('Bearer long-access-token');
       expect(req.headers.get('Content-Type')).toBe('application/json');
@@ -3174,7 +3284,7 @@ describe('Spotify Web API', () => {
     fetch.mockResponse(async req => {
       expect(req.method).toBe('POST');
       expect(req.url).toBe(
-        'https://api.spotify.com/v1/playlists/5ieJqeLJjjI8iJWaxeBLuK/tracks'
+        'https://api.spotify.com/v1/playlists/5ieJqeLJjjI8iJWaxeBLuK/items'
       );
       expect(req.headers.get('Authorization')).toBe('Bearer long-access-token');
       expect(req.headers.get('Content-Type')).toBe('application/json');
@@ -3217,7 +3327,7 @@ describe('Spotify Web API', () => {
     fetch.mockResponse(async req => {
       expect(req.method).toBe('DELETE');
       expect(req.url).toBe(
-        'https://api.spotify.com/v1/playlists/5ieJqeLJjjI8iJWaxeBLuK/tracks'
+        'https://api.spotify.com/v1/playlists/5ieJqeLJjjI8iJWaxeBLuK/items'
       );
       expect(req.headers.get('Authorization')).toBe('Bearer long-access-token');
       expect(req.headers.get('Content-Type')).toBe('application/json');
@@ -3261,14 +3371,14 @@ describe('Spotify Web API', () => {
     fetch.mockResponse(async req => {
       expect(req.method).toBe('DELETE');
       expect(req.url).toBe(
-        'https://api.spotify.com/v1/playlists/5ieJqeLJjjI8iJWaxeBLuK/tracks'
+        'https://api.spotify.com/v1/playlists/5ieJqeLJjjI8iJWaxeBLuK/items'
       );
       expect(req.headers.get('Authorization')).toBe('Bearer long-access-token');
       expect(req.headers.get('Content-Type')).toBe('application/json');
       const body = JSON.parse(req.body);
 
       expect(body).toEqual({
-        tracks: [
+        items: [
           {
             uri: 'spotify:track:491rM2JN8KvmV6p0oDDuJT',
             positions: [3]
@@ -3309,7 +3419,7 @@ describe('Spotify Web API', () => {
     fetch.mockResponse(async req => {
       expect(req.method).toBe('PUT');
       expect(req.url).toBe(
-        'https://api.spotify.com/v1/playlists/5ieJqeLJjjI8iJWaxeBLuK/tracks'
+        'https://api.spotify.com/v1/playlists/5ieJqeLJjjI8iJWaxeBLuK/items'
       );
       expect(req.headers.get('Content-Type')).toBe('application/json');
       expect(req.headers.get('Authorization')).toBe('Bearer long-access-token');
@@ -3352,7 +3462,7 @@ describe('Spotify Web API', () => {
     fetch.mockResponse(async req => {
       expect(req.method).toBe('PUT');
       expect(req.url).toBe(
-        'https://api.spotify.com/v1/playlists/5ieJqeLJjjI8iJWaxeBLuK/tracks'
+        'https://api.spotify.com/v1/playlists/5ieJqeLJjjI8iJWaxeBLuK/items'
       );
       expect(req.headers.get('authorization')).toBe('Bearer long-access-token');
       expect(req.headers.get('content-type')).toBe('application/json');
@@ -3403,11 +3513,11 @@ describe('Spotify Web API', () => {
   test('should add tracks to the users library', done => {
     fetch.mockResponse(async req => {
       expect(req.method).toBe('PUT');
-      expect(req.url).toBe('https://api.spotify.com/v1/me/tracks');
+      expect(req.url).toBe('https://api.spotify.com/v1/me/library');
       expect(req.headers.get('authorization')).toBe('Bearer myAccessToken');
       expect(req.headers.get('content-type')).toBe('application/json');
       expect(JSON.parse(req.body)).toEqual({
-        ids: ['3VNWq8rTnQG6fM1eldSpZ0']
+        uris: ['spotify:track:3VNWq8rTnQG6fM1eldSpZ0']
       });
 
       return {
@@ -3435,11 +3545,11 @@ describe('Spotify Web API', () => {
   test('should add tracks to the users library using callback', done => {
     fetch.mockResponse(async req => {
       expect(req.method).toBe('PUT');
-      expect(req.url).toBe('https://api.spotify.com/v1/me/tracks');
+      expect(req.url).toBe('https://api.spotify.com/v1/me/library');
       expect(req.headers.get('authorization')).toBe('Bearer myAccessToken');
       expect(req.headers.get('content-type')).toBe('application/json');
       expect(JSON.parse(req.body)).toEqual({
-        ids: ['3VNWq8rTnQG6fM1eldSpZ0']
+        uris: ['spotify:track:3VNWq8rTnQG6fM1eldSpZ0']
       });
 
       return {
@@ -4061,8 +4171,10 @@ describe('Spotify Web API', () => {
     fetch.mockResponse(async req => {
       const url = new URL(req.url);
       expect(req.method).toBe('GET');
-      expect(url.pathname).toBe('/v1/me/shows/contains');
-      expect(url.searchParams.get('ids')).toBe('1,2,3');
+      expect(url.pathname).toBe('/v1/me/library/contains');
+      expect(url.searchParams.get('uris')).toBe(
+        'spotify:show:1,spotify:show:2,spotify:show:3'
+      );
 
       return {
         status: 200,
@@ -4090,8 +4202,11 @@ describe('Spotify Web API', () => {
     fetch.mockResponse(async req => {
       const url = new URL(req.url);
       expect(req.method).toBe('DELETE');
-      expect(url.pathname).toBe('/v1/me/shows');
-      expect(url.searchParams.get('ids')).toBe('1,2,3');
+      expect(url.pathname).toBe('/v1/me/library');
+      expect(url.search).toBe('');
+      expect(JSON.parse(req.body)).toEqual({
+        uris: ['spotify:show:1', 'spotify:show:2', 'spotify:show:3']
+      });
       expect(req.headers.get('Authorization')).toEqual('Bearer longtoken');
       expect(req.headers.get('Content-Type')).toEqual('application/json');
 
@@ -4117,8 +4232,10 @@ describe('Spotify Web API', () => {
   test("should add to user's saved shows", done => {
     fetch.mockResponse(async req => {
       expect(req.method).toBe('PUT');
-      expect(req.url).toBe('https://api.spotify.com/v1/me/shows');
-      expect(JSON.parse(req.body)).toEqual(['1', '2', '3']);
+      expect(req.url).toBe('https://api.spotify.com/v1/me/library');
+      expect(JSON.parse(req.body)).toEqual({
+        uris: ['spotify:show:1', 'spotify:show:2', 'spotify:show:3']
+      });
       expect(req.headers.get('Authorization')).toEqual('Bearer longtoken');
       expect(req.headers.get('Content-Type')).toEqual('application/json');
 
