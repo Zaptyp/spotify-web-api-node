@@ -1638,6 +1638,33 @@ describe('Spotify Web API', () => {
       });
   });
 
+  test('should get playlist items using callback', done => {
+    fetch.mockResponse(async req => {
+      const url = new URL(req.url);
+      expect(req.method).toBe('GET');
+      expect(url.pathname).toBe('/v1/playlists/3iV5W9uYEdYUVa79Axb7Rh/items');
+      expect(req.body).toBeFalsy();
+
+      return {
+        status: 200,
+        headers: {
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify({
+          items: [{ added_at: '2026-03-27T10:00:00Z' }]
+        })
+      };
+    });
+
+    var api = new SpotifyWebApi();
+
+    api.getPlaylistTracks('3iV5W9uYEdYUVa79Axb7Rh', {}, function(err, data) {
+      expect(err).toBeFalsy();
+      expect(data.body.items).toBeTruthy();
+      done();
+    });
+  });
+
   test('should fail when playlist items are missing and items are expected', done => {
     fetch.mockResponse(async req => {
       const url = new URL(req.url);
@@ -1694,6 +1721,32 @@ describe('Spotify Web API', () => {
       expect(data).toBeUndefined();
       expect(err.code).toBe('PLAYLIST_ITEMS_UNAVAILABLE');
       expect(err.playlistId).toBe('3iV5W9uYEdYUVa79Axb7Rh');
+      done();
+    });
+  });
+
+  test('should pass through upstream error in callback for playlist items', done => {
+    fetch.mockResponse(async req => {
+      return {
+        status: 403,
+        headers: {
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify({
+          error: {
+            status: 403,
+            message: 'Forbidden'
+          }
+        })
+      };
+    });
+
+    var api = new SpotifyWebApi();
+
+    api.getPlaylistTracks('3iV5W9uYEdYUVa79Axb7Rh', {}, function(err, data) {
+      expect(data).toBeUndefined();
+      expect(err).toBeTruthy();
+      expect(err.statusCode).toBe(403);
       done();
     });
   });
