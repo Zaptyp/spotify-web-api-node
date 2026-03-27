@@ -33,16 +33,16 @@
     ]
   },
   "dependencies": {
-    "@types/spotify-api": "^0.0.25"
+    "@types/spotify-api": "^0.0.26"
   },
   "devDependencies": {
     "coveralls": "^3.1.1",
     "husky": "^9.1.7",
-    "jest": "^30.0.0",
+    "jest": "^30.3.0",
     "jest-fetch-mock": "^3.0.3",
-    "jest-resolve": "^30.0.0",
-    "lint-staged": "^16.0.0",
-    "prettier": "^3.5.3"
+    "jest-resolve": "^30.3.0",
+    "lint-staged": "^16.4.0",
+    "prettier": "^3.8.1"
   },
   "keywords": [
     "spotify",
