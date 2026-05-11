@@ -41,7 +41,7 @@
     "jest": "^30.3.0",
     "jest-fetch-mock": "^3.0.3",
     "jest-resolve": "^30.3.0",
-    "lint-staged": "^16.4.0",
+    "lint-staged": "^17.0.4",
     "prettier": "^3.8.1"
   },
   "keywords": [
