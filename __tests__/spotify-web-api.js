@@ -35,13 +35,13 @@ describe('Spotify Web API', () => {
 
     var api = new SpotifyWebApi();
     api.getTrack('3Qm86XLflmIXVm1wcwkgDK').then(
-      function(data) {
+      function (data) {
         expect(data.body.uri).toBe('spotify:track:3Qm86XLflmIXVm1wcwkgDK');
         expect(data.statusCode).toBe(200);
         expect(data.headers.get('cache-control')).toBe('public, max-age=7200');
         done();
       },
-      function(err) {
+      function (err) {
         done(new Error('Test failed!'));
       }
     );
@@ -65,10 +65,10 @@ describe('Spotify Web API', () => {
 
     var api = new SpotifyWebApi();
     api.getTrack('3Qm86XLflmIXVm1wcwkgDK').then(
-      function(data) {
+      function (data) {
         done();
       },
-      function(err) {
+      function (err) {
         done(err);
       }
     );
@@ -97,10 +97,10 @@ describe('Spotify Web API', () => {
 
     var api = new SpotifyWebApi();
     api.getTrack('3Qm86XLflmIXVm1wcwkgDK').then(
-      function(data) {
+      function (data) {
         done(new Error('Test failed!'));
       },
-      function(err) {
+      function (err) {
         expect(err.body.error.message).toBe('Do NOT do that again!');
         expect(err.body.error.status).toBe(400);
         expect(err.headers.get('Content-Type')).toBe('application/json');
@@ -129,10 +129,10 @@ describe('Spotify Web API', () => {
 
     var api = new SpotifyWebApi();
     api.getTrack('3Qm86XLflmIXVm1wcwkgDK', { market: 'SE' }).then(
-      function(data) {
+      function (data) {
         done();
       },
-      function(err) {
+      function (err) {
         done(err);
       }
     );
@@ -156,7 +156,7 @@ describe('Spotify Web API', () => {
     });
 
     var api = new SpotifyWebApi();
-    api.getTrack('3Qm86XLflmIXVm1wcwkgDK', {}, function(err, data) {
+    api.getTrack('3Qm86XLflmIXVm1wcwkgDK', {}, function (err, data) {
       expect(err).toBeFalsy();
       done(err);
     });
@@ -186,10 +186,10 @@ describe('Spotify Web API', () => {
 
     var api = new SpotifyWebApi();
     api.getTracks(['0eGsygTp906u18L0Oimnem', '1lDWb6b6ieDQ2xT7ewTC3G']).then(
-      function(data) {
+      function (data) {
         done();
       },
-      function(err) {
+      function (err) {
         done(err);
       }
     );
@@ -216,10 +216,10 @@ describe('Spotify Web API', () => {
 
     var api = new SpotifyWebApi();
     api.getAlbum('0sNOF9WDwhWunNAHPD3Baj').then(
-      function(data) {
+      function (data) {
         done();
       },
-      function(err) {
+      function (err) {
         done(err);
       }
     );
@@ -246,10 +246,10 @@ describe('Spotify Web API', () => {
 
     var api = new SpotifyWebApi();
     api.getAlbum('0sNOF9WDwhWunNAHPD3Baj', { market: 'SE' }).then(
-      function(data) {
+      function (data) {
         done();
       },
-      function(err) {
+      function (err) {
         done(new Error('Test failed!'));
       }
     );
@@ -275,7 +275,7 @@ describe('Spotify Web API', () => {
     });
 
     var api = new SpotifyWebApi();
-    api.getAlbum('0sNOF9WDwhWunNAHPD3Baj', {}, function(err, data) {
+    api.getAlbum('0sNOF9WDwhWunNAHPD3Baj', {}, function (err, data) {
       done(err);
     });
   });
@@ -306,10 +306,10 @@ describe('Spotify Web API', () => {
 
     var api = new SpotifyWebApi();
     api.getAlbums(['41MnTivkwTO3UUJ8DrqEJJ', '6JWc4iAiJ9FjyK0B59ABb4']).then(
-      function(data) {
+      function (data) {
         done();
       },
-      function(err) {
+      function (err) {
         done(err);
       }
     );
@@ -343,7 +343,7 @@ describe('Spotify Web API', () => {
     api.getAlbums(
       ['41MnTivkwTO3UUJ8DrqEJJ', '6JWc4iAiJ9FjyK0B59ABb4'],
       {},
-      function(err, data) {
+      function (err, data) {
         done(err);
       }
     );
@@ -368,10 +368,10 @@ describe('Spotify Web API', () => {
 
     var api = new SpotifyWebApi();
     api.getArtist('0LcJLqbBmaGUft1e9Mm8HV').then(
-      function(data) {
+      function (data) {
         done();
       },
-      function(err) {
+      function (err) {
         done(err);
       }
     );
@@ -395,7 +395,7 @@ describe('Spotify Web API', () => {
     });
 
     var api = new SpotifyWebApi();
-    api.getArtist('0LcJLqbBmaGUft1e9Mm8HV', function(err, data) {
+    api.getArtist('0LcJLqbBmaGUft1e9Mm8HV', function (err, data) {
       expect(err).toBeFalsy();
       done();
     });
@@ -427,7 +427,7 @@ describe('Spotify Web API', () => {
 
     var api = new SpotifyWebApi();
     api.getArtists(['0oSGxfWSnnOXhD2fKuz2Gy', '3dBVyJ7JuOMt4GE9607Qin']).then(
-      function(data) {
+      function (data) {
         expect(data.body.artists[0].uri).toBe(
           'spotify:artist:0oSGxfWSnnOXhD2fKuz2Gy'
         );
@@ -437,7 +437,7 @@ describe('Spotify Web API', () => {
         expect(data.statusCode).toBe(200);
         done();
       },
-      function(err) {
+      function (err) {
         done(err);
       }
     );
@@ -470,7 +470,7 @@ describe('Spotify Web API', () => {
     var api = new SpotifyWebApi();
     api.getArtists(
       ['0oSGxfWSnnOXhD2fKuz2Gy', '3dBVyJ7JuOMt4GE9607Qin'],
-      function(err, data) {
+      function (err, data) {
         expect(err).toBeFalsy();
         expect(data.body.artists[0].uri).toBe(
           'spotify:artist:0oSGxfWSnnOXhD2fKuz2Gy'
@@ -503,8 +503,7 @@ describe('Spotify Web API', () => {
         },
         body: JSON.stringify({
           albums: {
-            href:
-              'https://api.spotify.com/v1/search?q=The+Best+of+Keane&offset=2&limit=3&type=album'
+            href: 'https://api.spotify.com/v1/search?q=The+Best+of+Keane&offset=2&limit=3&type=album'
           }
         })
       };
@@ -512,7 +511,7 @@ describe('Spotify Web API', () => {
 
     var api = new SpotifyWebApi();
     api.searchAlbums('The Best of Keane', { limit: 3, offset: 2 }).then(
-      function(data) {
+      function (data) {
         expect(data.body.albums.href).toBe(
           'https://api.spotify.com/v1/search?q=The+Best+of+Keane&offset=2&limit=3&type=album'
         );
@@ -520,7 +519,7 @@ describe('Spotify Web API', () => {
         expect(data.headers.get('test')).toBe('value');
         done();
       },
-      function(err) {
+      function (err) {
         console.log(err);
         done(err);
       }
@@ -546,8 +545,7 @@ describe('Spotify Web API', () => {
         },
         body: JSON.stringify({
           albums: {
-            href:
-              'https://api.spotify.com/v1/search?q=The+Best+of+Keane&offset=2&limit=3&type=album'
+            href: 'https://api.spotify.com/v1/search?q=The+Best+of+Keane&offset=2&limit=3&type=album'
           }
         })
       };
@@ -557,7 +555,7 @@ describe('Spotify Web API', () => {
     api.searchAlbums(
       'The Best of Keane',
       { limit: 3, offset: 2 },
-      function(err, data) {
+      function (err, data) {
         expect(err).toBeFalsy();
         expect(data.body.albums.href).toBe(
           'https://api.spotify.com/v1/search?q=The+Best+of+Keane&offset=2&limit=3&type=album'
@@ -586,8 +584,7 @@ describe('Spotify Web API', () => {
         },
         body: JSON.stringify({
           playlists: {
-            href:
-              'https://api.spotify.com/v1/search?q=workout&offset=0&limit=1&type=playlist'
+            href: 'https://api.spotify.com/v1/search?q=workout&offset=0&limit=1&type=playlist'
           }
         })
       };
@@ -595,13 +592,13 @@ describe('Spotify Web API', () => {
 
     var api = new SpotifyWebApi();
     api.searchPlaylists('workout', { limit: 1, offset: 0 }).then(
-      function(data) {
+      function (data) {
         expect(data.body.playlists.href).toBe(
           'https://api.spotify.com/v1/search?q=workout&offset=0&limit=1&type=playlist'
         );
         done();
       },
-      function(err) {
+      function (err) {
         console.log(err);
         done(err);
       }
@@ -627,8 +624,7 @@ describe('Spotify Web API', () => {
         },
         body: JSON.stringify({
           artists: {
-            href:
-              'https://api.spotify.com/v1/search?q=David+Bowie&offset=1&limit=5&type=artist'
+            href: 'https://api.spotify.com/v1/search?q=David+Bowie&offset=1&limit=5&type=artist'
           }
         })
       };
@@ -636,13 +632,13 @@ describe('Spotify Web API', () => {
 
     var api = new SpotifyWebApi();
     api.searchArtists('David Bowie', { limit: 5, offset: 1 }).then(
-      function(data) {
+      function (data) {
         expect(data.body.artists.href).toBe(
           'https://api.spotify.com/v1/search?q=David+Bowie&offset=1&limit=5&type=artist'
         );
         done();
       },
-      function(err) {
+      function (err) {
         done(err);
       }
     );
@@ -667,8 +663,7 @@ describe('Spotify Web API', () => {
         },
         body: JSON.stringify({
           artists: {
-            href:
-              'https://api.spotify.com/v1/search?q=David+Bowie&offset=1&limit=5&type=artist'
+            href: 'https://api.spotify.com/v1/search?q=David+Bowie&offset=1&limit=5&type=artist'
           }
         })
       };
@@ -678,7 +673,7 @@ describe('Spotify Web API', () => {
     api.searchArtists(
       'David Bowie',
       { limit: 5, offset: 1 },
-      function(err, data) {
+      function (err, data) {
         expect(err).toBeFalsy();
         expect(data.body.artists.href).toBe(
           'https://api.spotify.com/v1/search?q=David+Bowie&offset=1&limit=5&type=artist'
@@ -707,8 +702,7 @@ describe('Spotify Web API', () => {
         },
         body: JSON.stringify({
           tracks: {
-            href:
-              'https://api.spotify.com/v1/search?q=Mr.+Brightside&offset=2&limit=3&type=track'
+            href: 'https://api.spotify.com/v1/search?q=Mr.+Brightside&offset=2&limit=3&type=track'
           }
         })
       };
@@ -716,13 +710,13 @@ describe('Spotify Web API', () => {
 
     var api = new SpotifyWebApi();
     api.searchTracks('Mr. Brightside', { limit: 3, offset: 2 }).then(
-      function(data) {
+      function (data) {
         expect(data.body.tracks.href).toBe(
           'https://api.spotify.com/v1/search?q=Mr.+Brightside&offset=2&limit=3&type=track'
         );
         done();
       },
-      function(err) {
+      function (err) {
         console.log(err);
         done(err);
       }
@@ -748,8 +742,7 @@ describe('Spotify Web API', () => {
         },
         body: JSON.stringify({
           tracks: {
-            href:
-              'https://api.spotify.com/v1/search?q=Mr.+Brightside&offset=2&limit=3&type=track'
+            href: 'https://api.spotify.com/v1/search?q=Mr.+Brightside&offset=2&limit=3&type=track'
           }
         })
       };
@@ -759,7 +752,7 @@ describe('Spotify Web API', () => {
     api.searchTracks(
       'Mr. Brightside',
       { limit: 3, offset: 2 },
-      function(err, data) {
+      function (err, data) {
         expect(err).toBeFalsy();
         expect(data.body.tracks.href).toBe(
           'https://api.spotify.com/v1/search?q=Mr.+Brightside&offset=2&limit=3&type=track'
@@ -788,8 +781,7 @@ describe('Spotify Web API', () => {
         },
         body: JSON.stringify({
           tracks: {
-            href:
-              'https://api.spotify.com/v1/search?q=Mr.+Brightside&offset=2&limit=3&type=track,album'
+            href: 'https://api.spotify.com/v1/search?q=Mr.+Brightside&offset=2&limit=3&type=track,album'
           }
         })
       };
@@ -800,7 +792,7 @@ describe('Spotify Web API', () => {
       'Mr. Brightside',
       ['track', 'album'],
       { limit: 3, offset: 2 },
-      function(err, data) {
+      function (err, data) {
         expect(err).toBeFalsy();
         expect(data.body.tracks.href).toBe(
           'https://api.spotify.com/v1/search?q=Mr.+Brightside&offset=2&limit=3&type=track,album'
@@ -831,10 +823,10 @@ describe('Spotify Web API', () => {
 
     var api = new SpotifyWebApi();
     api.searchAlbums('Keane', { limit: 50, offset: 0 }).then(
-      function(data) {
+      function (data) {
         done();
       },
-      function(err) {
+      function (err) {
         done(err);
       }
     );
@@ -857,8 +849,7 @@ describe('Spotify Web API', () => {
           'content-type': 'application/json'
         },
         body: JSON.stringify({
-          href:
-            'https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy/albums?offset=5&limit=2&album_type=album&market=GB'
+          href: 'https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy/albums?offset=5&limit=2&album_type=album&market=GB'
         })
       };
     });
@@ -872,13 +863,13 @@ describe('Spotify Web API', () => {
         offset: 5
       })
       .then(
-        function(data) {
+        function (data) {
           expect(data.body.href).toBe(
             'https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy/albums?offset=5&limit=2&album_type=album&market=GB'
           );
           done();
         },
-        function(err) {
+        function (err) {
           console.log(err);
           done(err);
         }
@@ -902,8 +893,7 @@ describe('Spotify Web API', () => {
           'content-type': 'application/json'
         },
         body: JSON.stringify({
-          href:
-            'https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy/albums?offset=5&limit=2&album_type=album&market=GB'
+          href: 'https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy/albums?offset=5&limit=2&album_type=album&market=GB'
         })
       };
     });
@@ -912,7 +902,7 @@ describe('Spotify Web API', () => {
     api.getArtistAlbums(
       '0oSGxfWSnnOXhD2fKuz2Gy',
       { album_type: 'album', country: 'GB', limit: 2, offset: 5 },
-      function(err, data) {
+      function (err, data) {
         expect(err).toBeFalsy();
         expect(data.body.href).toBe(
           'https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy/albums?offset=5&limit=2&album_type=album&market=GB'
@@ -937,21 +927,20 @@ describe('Spotify Web API', () => {
           'content-type': 'application/json'
         },
         body: JSON.stringify({
-          href:
-            'https://api.spotify.com/v1/albums/41MnTivkwTO3UUJ8DrqEJJ/tracks?offset=1&limit=5'
+          href: 'https://api.spotify.com/v1/albums/41MnTivkwTO3UUJ8DrqEJJ/tracks?offset=1&limit=5'
         })
       };
     });
 
     var api = new SpotifyWebApi();
     api.getAlbumTracks('41MnTivkwTO3UUJ8DrqEJJ', { limit: 5, offset: 1 }).then(
-      function(data) {
+      function (data) {
         expect(data.body.href).toBe(
           'https://api.spotify.com/v1/albums/41MnTivkwTO3UUJ8DrqEJJ/tracks?offset=1&limit=5'
         );
         done();
       },
-      function(err) {
+      function (err) {
         done(err);
       }
     );
@@ -972,8 +961,7 @@ describe('Spotify Web API', () => {
           'content-type': 'application/json'
         },
         body: JSON.stringify({
-          href:
-            'https://api.spotify.com/v1/albums/41MnTivkwTO3UUJ8DrqEJJ/tracks?offset=1&limit=5'
+          href: 'https://api.spotify.com/v1/albums/41MnTivkwTO3UUJ8DrqEJJ/tracks?offset=1&limit=5'
         })
       };
     });
@@ -982,7 +970,7 @@ describe('Spotify Web API', () => {
     api.getAlbumTracks(
       '41MnTivkwTO3UUJ8DrqEJJ',
       { limit: 5, offset: 1 },
-      function(err, data) {
+      function (err, data) {
         expect(err).toBeFalsy();
         expect(data.body.href).toEqual(
           'https://api.spotify.com/v1/albums/41MnTivkwTO3UUJ8DrqEJJ/tracks?offset=1&limit=5'
@@ -1008,8 +996,7 @@ describe('Spotify Web API', () => {
           'content-type': 'application/json'
         },
         body: JSON.stringify({
-          href:
-            'https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy/top-tracks?country=GB'
+          href: 'https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy/top-tracks?country=GB'
         })
       };
     });
@@ -1017,10 +1004,10 @@ describe('Spotify Web API', () => {
     var api = new SpotifyWebApi();
 
     api.getArtistTopTracks('0oSGxfWSnnOXhD2fKuz2Gy', 'GB').then(
-      function(data) {
+      function (data) {
         done();
       },
-      function(err) {
+      function (err) {
         done(err);
       }
     );
@@ -1042,8 +1029,7 @@ describe('Spotify Web API', () => {
           'content-type': 'application/json'
         },
         body: JSON.stringify({
-          href:
-            'https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy/top-tracks?country=GB'
+          href: 'https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy/top-tracks?country=GB'
         })
       };
     });
@@ -1053,7 +1039,7 @@ describe('Spotify Web API', () => {
     api.getArtistTopTracks(
       '0oSGxfWSnnOXhD2fKuz2Gy',
       'GB',
-      function(err, data) {
+      function (err, data) {
         expect(err).toBeFalsy();
         done();
       }
@@ -1082,11 +1068,11 @@ describe('Spotify Web API', () => {
     var api = new SpotifyWebApi();
 
     api.getArtistRelatedArtists('0qeei9KQnptjwb8MgkqEoy').then(
-      function(data) {
+      function (data) {
         expect(data.body.artists).toBeTruthy();
         done();
       },
-      function(err) {
+      function (err) {
         done(err);
       }
     );
@@ -1113,7 +1099,7 @@ describe('Spotify Web API', () => {
 
     var api = new SpotifyWebApi();
 
-    api.getArtistRelatedArtists('0qeei9KQnptjwb8MgkqEoy', function(err, data) {
+    api.getArtistRelatedArtists('0qeei9KQnptjwb8MgkqEoy', function (err, data) {
       expect(data.body.artists).toBeTruthy();
       done();
     });
@@ -1139,11 +1125,11 @@ describe('Spotify Web API', () => {
     var api = new SpotifyWebApi();
 
     api.getUser('petteralexis').then(
-      function(data) {
+      function (data) {
         expect('spotify:user:petteralexis').toBe(data.body.uri);
         done();
       },
-      function(err) {
+      function (err) {
         done(err);
       }
     );
@@ -1169,11 +1155,11 @@ describe('Spotify Web API', () => {
     var api = new SpotifyWebApi();
 
     api.getUser('#matze23').then(
-      function(data) {
+      function (data) {
         expect('spotify:user:%23matze23').toBe(data.body.uri);
         done();
       },
-      function(err) {
+      function (err) {
         done(err);
       }
     );
@@ -1198,7 +1184,7 @@ describe('Spotify Web API', () => {
 
     var api = new SpotifyWebApi();
 
-    api.getUser('petteralexis', function(err, data) {
+    api.getUser('petteralexis', function (err, data) {
       expect('spotify:user:petteralexis').toBe(data.body.uri);
       done();
     });
@@ -1226,7 +1212,7 @@ describe('Spotify Web API', () => {
       accessToken: 'someAccessToken'
     });
 
-    api.getMe().then(function(data) {
+    api.getMe().then(function (data) {
       expect('spotify:user:thelinmichael').toBe(data.body.uri);
       done();
     });
@@ -1253,7 +1239,7 @@ describe('Spotify Web API', () => {
     var api = new SpotifyWebApi();
     api.setAccessToken('someAccessToken');
 
-    api.getMe().then(function(data) {
+    api.getMe().then(function (data) {
       expect('spotify:user:thelinmichael').toBe(data.body.uri);
       done();
     });
@@ -1291,7 +1277,7 @@ describe('Spotify Web API', () => {
     var api = new SpotifyWebApi();
     api.setAccessToken('myVeryLongAccessToken');
 
-    api.getUserPlaylists('thelinmichael').then(function(data) {
+    api.getUserPlaylists('thelinmichael').then(function (data) {
       expect(2).toBe(data.body.items.length);
       expect(data.statusCode).toBe(200);
       done();
@@ -1328,7 +1314,7 @@ describe('Spotify Web API', () => {
     var api = new SpotifyWebApi();
     api.setAccessToken('myVeryLongAccessToken');
 
-    api.getUserPlaylists().then(function(data) {
+    api.getUserPlaylists().then(function (data) {
       expect(2).toBe(data.body.items.length);
       expect(data.statusCode).toBe(200);
       done();
@@ -1368,7 +1354,7 @@ describe('Spotify Web API', () => {
     var api = new SpotifyWebApi();
     api.setAccessToken('myVeryLongAccessToken');
 
-    api.getUserPlaylists({ limit: 27, offset: 7 }).then(function(data) {
+    api.getUserPlaylists({ limit: 27, offset: 7 }).then(function (data) {
       expect(2).toBe(data.body.items.length);
       expect(data.statusCode).toBe(200);
       done();
@@ -1400,14 +1386,14 @@ describe('Spotify Web API', () => {
     var api = new SpotifyWebApi();
     api.setAccessToken('myVeryVeryLongAccessToken');
 
-    api.getPlaylist('5ieJqeLJjjI8iJWaxeBLuK', {}, function(err, data) {
+    api.getPlaylist('5ieJqeLJjjI8iJWaxeBLuK', {}, function (err, data) {
       expect(data.body.uri).toBe('spotify:playlist:5ieJqeLJjjI8iJWaxeBLuK');
       expect(data.statusCode).toBe(200);
       done();
     });
   });
 
-  test('should create a playlist', function(done) {
+  test('should create a playlist', function (done) {
     fetch.mockResponse(async req => {
       expect(req.method).toBe('POST');
       expect(req.url).toBe('https://api.spotify.com/v1/me/playlists');
@@ -1430,12 +1416,12 @@ describe('Spotify Web API', () => {
     api.setAccessToken('long-access-token');
 
     api.createPlaylist('My Cool Playlist').then(
-      function(data) {
+      function (data) {
         expect(data.body.name).toBe('My Cool Playlist');
         expect(data.statusCode).toBe(200);
         done();
       },
-      function(err) {
+      function (err) {
         console.log(err.error);
         done(err);
       }
@@ -1471,7 +1457,7 @@ describe('Spotify Web API', () => {
     api.createPlaylist(
       'My Cool Playlist',
       { description: "It's really cool", public: false },
-      function(err, data) {
+      function (err, data) {
         done(err);
       }
     );
@@ -1485,8 +1471,7 @@ describe('Spotify Web API', () => {
       );
       expect(req.headers.get('content-type')).toBe('application/json');
       expect(JSON.parse(req.body)).toEqual({
-        name:
-          'This is a new name for my Cool Playlist, and will become private',
+        name: 'This is a new name for my Cool Playlist, and will become private',
         public: false
       });
 
@@ -1496,8 +1481,7 @@ describe('Spotify Web API', () => {
           'content-type': 'application/json'
         },
         body: JSON.stringify({
-          name:
-            'This is a new name for my Cool Playlist, and will become private',
+          name: 'This is a new name for my Cool Playlist, and will become private',
           public: false
         })
       };
@@ -1508,11 +1492,10 @@ describe('Spotify Web API', () => {
 
     api
       .changePlaylistDetails('5ieJqeLJjjI8iJWaxeBLuK', {
-        name:
-          'This is a new name for my Cool Playlist, and will become private',
+        name: 'This is a new name for my Cool Playlist, and will become private',
         public: false
       })
-      .then(function(data) {
+      .then(function (data) {
         expect(data.statusCode).toBe(200);
         done();
       });
@@ -1551,7 +1534,7 @@ describe('Spotify Web API', () => {
         'spotify:track:4iV5W9uYEdYUVa79Axb7Rh',
         'spotify:track:1301WleyT98MSxVHPZCA6M'
       ])
-      .then(function(data) {
+      .then(function (data) {
         expect(201).toBe(data.statusCode);
         done();
       });
@@ -1596,7 +1579,7 @@ describe('Spotify Web API', () => {
           position: 10
         }
       )
-      .then(function(data) {
+      .then(function (data) {
         done();
       });
   });
@@ -1633,7 +1616,7 @@ describe('Spotify Web API', () => {
         additional_types: 'episode',
         fields: 'total'
       })
-      .then(function(data) {
+      .then(function (data) {
         done();
       });
   });
@@ -1658,7 +1641,7 @@ describe('Spotify Web API', () => {
 
     var api = new SpotifyWebApi();
 
-    api.getPlaylistTracks('3iV5W9uYEdYUVa79Axb7Rh', {}, function(err, data) {
+    api.getPlaylistTracks('3iV5W9uYEdYUVa79Axb7Rh', {}, function (err, data) {
       expect(err).toBeFalsy();
       expect(data.body.items).toBeTruthy();
       done();
@@ -1686,10 +1669,10 @@ describe('Spotify Web API', () => {
     var api = new SpotifyWebApi();
 
     api.getPlaylistTracks('3iV5W9uYEdYUVa79Axb7Rh').then(
-      function(data) {
+      function (data) {
         done(new Error('Test failed!'));
       },
-      function(err) {
+      function (err) {
         expect(err.code).toBe('PLAYLIST_ITEMS_UNAVAILABLE');
         expect(err.playlistId).toBe('3iV5W9uYEdYUVa79Axb7Rh');
         done();
@@ -1717,7 +1700,7 @@ describe('Spotify Web API', () => {
 
     var api = new SpotifyWebApi();
 
-    api.getPlaylistTracks('3iV5W9uYEdYUVa79Axb7Rh', {}, function(err, data) {
+    api.getPlaylistTracks('3iV5W9uYEdYUVa79Axb7Rh', {}, function (err, data) {
       expect(data).toBeUndefined();
       expect(err.code).toBe('PLAYLIST_ITEMS_UNAVAILABLE');
       expect(err.playlistId).toBe('3iV5W9uYEdYUVa79Axb7Rh');
@@ -1743,7 +1726,7 @@ describe('Spotify Web API', () => {
 
     var api = new SpotifyWebApi();
 
-    api.getPlaylistTracks('3iV5W9uYEdYUVa79Axb7Rh', {}, function(err, data) {
+    api.getPlaylistTracks('3iV5W9uYEdYUVa79Axb7Rh', {}, function (err, data) {
       expect(data).toBeUndefined();
       expect(err).toBeTruthy();
       expect(err.statusCode).toBe(403);
@@ -1773,7 +1756,7 @@ describe('Spotify Web API', () => {
 
     api
       .uploadCustomPlaylistCoverImage('3iV5W9uYEdYUVa79Axb7Rh', 'longbase64uri')
-      .then(function(data) {
+      .then(function (data) {
         done();
       });
   });
@@ -1802,7 +1785,7 @@ describe('Spotify Web API', () => {
       accessToken: 'someAccessToken'
     });
 
-    api.getMyTopArtists({ limit: 5 }).then(function(data) {
+    api.getMyTopArtists({ limit: 5 }).then(function (data) {
       expect(data.body.items).toBeTruthy();
       done();
     });
@@ -1832,7 +1815,7 @@ describe('Spotify Web API', () => {
       accessToken: 'someAccessToken'
     });
 
-    api.getMyTopTracks({ limit: 5 }).then(function(data) {
+    api.getMyTopTracks({ limit: 5 }).then(function (data) {
       expect(data.body.items).toBeTruthy();
       done();
     });
@@ -1860,7 +1843,7 @@ describe('Spotify Web API', () => {
       accessToken: 'someAccessToken'
     });
 
-    api.getMyCurrentPlayingTrack({ market: 'NO' }).then(function(data, err) {
+    api.getMyCurrentPlayingTrack({ market: 'NO' }).then(function (data, err) {
       done(err);
     });
   });
@@ -1889,7 +1872,7 @@ describe('Spotify Web API', () => {
       accessToken: 'someAccessToken'
     });
 
-    api.getMyRecentlyPlayedTracks({ limit: 5 }).then(function(data) {
+    api.getMyRecentlyPlayedTracks({ limit: 5 }).then(function (data) {
       expect(data.body.items).toBeTruthy();
       done();
     });
@@ -1942,7 +1925,7 @@ describe('Spotify Web API', () => {
       accessToken: 'someAccessToken'
     });
 
-    api.getMyDevices().then(function(data) {
+    api.getMyDevices().then(function (data) {
       expect(data.body.devices).toBeTruthy();
       done();
     });
@@ -1971,7 +1954,7 @@ describe('Spotify Web API', () => {
       accessToken: 'someAccessToken'
     });
 
-    api.getMyCurrentPlaybackState({ market: 'GB' }).then(function(data) {
+    api.getMyCurrentPlaybackState({ market: 'GB' }).then(function (data) {
       expect(data.body.device).toBeTruthy();
       done();
     });
@@ -2004,10 +1987,10 @@ describe('Spotify Web API', () => {
         play: true
       })
       .then(
-        function(data) {
+        function (data) {
           done();
         },
-        function(err) {
+        function (err) {
           console.log(err);
           done(err);
         }
@@ -2036,10 +2019,10 @@ describe('Spotify Web API', () => {
     });
 
     api.transferMyPlayback(['my-device-id']).then(
-      function(data) {
+      function (data) {
         done();
       },
-      function(err) {
+      function (err) {
         console.log(err);
         done(err);
       }
@@ -2065,10 +2048,10 @@ describe('Spotify Web API', () => {
     });
 
     api.play().then(
-      function(data) {
+      function (data) {
         done();
       },
-      function(err) {
+      function (err) {
         console.log(err);
         done(err);
       }
@@ -2108,10 +2091,10 @@ describe('Spotify Web API', () => {
         offset: { position: 5 }
       })
       .then(
-        function(data) {
+        function (data) {
           done();
         },
-        function(err) {
+        function (err) {
           console.log(err);
           done(err);
         }
@@ -2137,10 +2120,10 @@ describe('Spotify Web API', () => {
     });
 
     api.pause().then(
-      function(data) {
+      function (data) {
         done();
       },
-      function(err) {
+      function (err) {
         console.log(err);
         done(err);
       }
@@ -2168,10 +2151,10 @@ describe('Spotify Web API', () => {
     });
 
     api.pause({ device_id: 'my_device_id' }).then(
-      function(data) {
+      function (data) {
         done();
       },
-      function(err) {
+      function (err) {
         console.log(err);
         done(err);
       }
@@ -2196,10 +2179,10 @@ describe('Spotify Web API', () => {
     });
 
     api.skipToNext().then(
-      function(data) {
+      function (data) {
         done();
       },
-      function(err) {
+      function (err) {
         done(err);
       }
     );
@@ -2223,10 +2206,10 @@ describe('Spotify Web API', () => {
     });
 
     api.skipToPrevious().then(
-      function(data) {
+      function (data) {
         done();
       },
-      function(err) {
+      function (err) {
         console.log(err);
         done(err);
       }
@@ -2255,10 +2238,10 @@ describe('Spotify Web API', () => {
     });
 
     api.setRepeat('off', { device_id: 'some-device-id' }).then(
-      function(data) {
+      function (data) {
         done();
       },
-      function(err) {
+      function (err) {
         done(err);
       }
     );
@@ -2286,10 +2269,10 @@ describe('Spotify Web API', () => {
     });
 
     api.setRepeat('context', {}).then(
-      function(data) {
+      function (data) {
         done();
       },
-      function(err) {
+      function (err) {
         console.log(err);
         done(err);
       }
@@ -2318,10 +2301,10 @@ describe('Spotify Web API', () => {
     });
 
     api.setShuffle(true, { device_id: 'my-device' }).then(
-      function(data) {
+      function (data) {
         done();
       },
-      function(err) {
+      function (err) {
         done(err);
       }
     );
@@ -2349,10 +2332,10 @@ describe('Spotify Web API', () => {
     });
 
     api.setShuffle(false).then(
-      function(data) {
+      function (data) {
         done();
       },
-      function(err) {
+      function (err) {
         done(err);
       }
     );
@@ -2380,10 +2363,10 @@ describe('Spotify Web API', () => {
     });
 
     api.setVolume(75).then(
-      function(data) {
+      function (data) {
         done();
       },
-      function(err) {
+      function (err) {
         done(err);
       }
     );
@@ -2411,10 +2394,10 @@ describe('Spotify Web API', () => {
     });
 
     api.setVolume(80, { device_id: 'my_device_id' }).then(
-      function(data) {
+      function (data) {
         done();
       },
-      function(err) {
+      function (err) {
         done(err);
       }
     );
@@ -2442,10 +2425,10 @@ describe('Spotify Web API', () => {
     });
 
     api.seek(2000).then(
-      function(data) {
+      function (data) {
         done();
       },
-      function(err) {
+      function (err) {
         done(err);
       }
     );
@@ -2473,10 +2456,10 @@ describe('Spotify Web API', () => {
     });
 
     api.seek(2000, { device_id: 'my_device_id' }).then(
-      function(data) {
+      function (data) {
         done();
       },
-      function(err) {
+      function (err) {
         done(err);
       }
     );
@@ -2503,10 +2486,10 @@ describe('Spotify Web API', () => {
     });
 
     api.removeFromMySavedTracks(['3VNWq8rTnQG6fM1eldSpZ0']).then(
-      function(data) {
+      function (data) {
         done();
       },
-      function(err) {
+      function (err) {
         done(err);
       }
     );
@@ -2541,10 +2524,10 @@ describe('Spotify Web API', () => {
     });
 
     api.getMySavedTracks({ market: 'SE', limit: 1, offset: 3 }).then(
-      function(data) {
+      function (data) {
         done();
       },
-      function(err) {
+      function (err) {
         done(err);
       }
     );
@@ -2582,10 +2565,10 @@ describe('Spotify Web API', () => {
         '37cZdqrQiKt3IT00338dzs'
       ])
       .then(
-        function(data) {
+        function (data) {
           done();
         },
-        function(err) {
+        function (err) {
           done(err);
         }
       );
@@ -2612,10 +2595,10 @@ describe('Spotify Web API', () => {
     });
 
     api.removeFromMySavedAlbums(['27cZdqrQiKt3IT00338dws']).then(
-      function(data) {
+      function (data) {
         done();
       },
-      function(err) {
+      function (err) {
         done(err);
       }
     );
@@ -2648,10 +2631,10 @@ describe('Spotify Web API', () => {
     api
       .addToMySavedAlbums(['4iV5W9uYEdYUVa79Axb7Rh', '1301WleyT98MSxVHPZCA6M'])
       .then(
-        function(data) {
+        function (data) {
           done();
         },
-        function(err) {
+        function (err) {
           done(err);
         }
       );
@@ -2692,14 +2675,14 @@ describe('Spotify Web API', () => {
         offset: 1
       })
       .then(
-        function(data) {
+        function (data) {
           expect(data.body.href).toBe(
             'https://api.spotify.com/v1/me/albums?offset=1&limit=2'
           );
           expect(data.body.items[0]['added_at']).toBe('2014-07-08T18:18:33Z');
           done();
         },
-        function(err) {
+        function (err) {
           done(err);
         }
       );
@@ -2730,7 +2713,7 @@ describe('Spotify Web API', () => {
       accessToken: accessToken
     });
     api.containsMySavedAlbums(['27cZdqrQiKt3IT00338dws']).then(
-      function(data) {
+      function (data) {
         expect(Object.prototype.toString.call(data.body)).toBe(
           '[object Array]'
         );
@@ -2738,7 +2721,7 @@ describe('Spotify Web API', () => {
         expect(data.body[0]).toBe(true);
         done();
       },
-      function(err) {
+      function (err) {
         console.log(err);
         done(err);
       }
@@ -2748,9 +2731,7 @@ describe('Spotify Web API', () => {
   test('should follow a playlist', done => {
     fetch.mockResponse(async req => {
       expect(req.method).toBe('PUT');
-      expect(req.url).toBe(
-        'https://api.spotify.com/v1/me/library'
-      );
+      expect(req.url).toBe('https://api.spotify.com/v1/me/library');
       expect(req.headers.get('authorization')).toBe('Bearer myAccessToken');
       expect(req.headers.get('content-type')).toBe('application/json');
       expect(JSON.parse(req.body)).toEqual({
@@ -2773,10 +2754,10 @@ describe('Spotify Web API', () => {
         public: false
       })
       .then(
-        function(data) {
+        function (data) {
           done();
         },
-        function(err) {
+        function (err) {
           done(err);
         }
       );
@@ -2803,10 +2784,10 @@ describe('Spotify Web API', () => {
     });
 
     api.unfollowPlaylist('7p9EIC2KW0NNkTEOnTUZJl').then(
-      function(data) {
+      function (data) {
         done();
       },
-      function(err) {
+      function (err) {
         done(err);
       }
     );
@@ -2835,10 +2816,10 @@ describe('Spotify Web API', () => {
     });
 
     api.followUsers(['thelinmichael', 'wizzler']).then(
-      function(data) {
+      function (data) {
         done();
       },
-      function(err) {
+      function (err) {
         done(err);
       }
     );
@@ -2866,7 +2847,7 @@ describe('Spotify Web API', () => {
       accessToken: accessToken
     });
 
-    api.followUsers(['thelinmichael', 'wizzler'], function(err, data) {
+    api.followUsers(['thelinmichael', 'wizzler'], function (err, data) {
       expect(err).toBeFalsy();
       done();
     });
@@ -2895,10 +2876,10 @@ describe('Spotify Web API', () => {
     });
 
     api.followArtists(['137W8MRPWKqSmrBGDBFSop']).then(
-      function(data) {
+      function (data) {
         done();
       },
-      function(err) {
+      function (err) {
         console.log(err);
         done(err);
       }
@@ -2927,7 +2908,7 @@ describe('Spotify Web API', () => {
       accessToken: accessToken
     });
 
-    api.followArtists(['137W8MRPWKqSmrBGDBFSop'], function(err, data) {
+    api.followArtists(['137W8MRPWKqSmrBGDBFSop'], function (err, data) {
       done();
     });
   });
@@ -2954,10 +2935,10 @@ describe('Spotify Web API', () => {
     });
 
     api.unfollowUsers(['thelinmichael', 'wizzler']).then(
-      function(data) {
+      function (data) {
         done();
       },
-      function(err) {
+      function (err) {
         done(err);
       }
     );
@@ -2984,7 +2965,7 @@ describe('Spotify Web API', () => {
       accessToken: accessToken
     });
 
-    api.unfollowUsers(['thelinmichael', 'wizzler'], function(err, data) {
+    api.unfollowUsers(['thelinmichael', 'wizzler'], function (err, data) {
       done(err);
     });
   });
@@ -3011,10 +2992,10 @@ describe('Spotify Web API', () => {
     });
 
     api.unfollowArtists(['137W8MRPWKqSmrBGDBFSop']).then(
-      function(data) {
+      function (data) {
         done();
       },
-      function(err) {
+      function (err) {
         done(err);
       }
     );
@@ -3041,7 +3022,7 @@ describe('Spotify Web API', () => {
       accessToken: accessToken
     });
 
-    api.unfollowArtists(['137W8MRPWKqSmrBGDBFSop'], function(err, data) {
+    api.unfollowArtists(['137W8MRPWKqSmrBGDBFSop'], function (err, data) {
       expect(data.statusCode).toBe(200);
       done();
     });
@@ -3072,11 +3053,11 @@ describe('Spotify Web API', () => {
     });
 
     api.isFollowingUsers(['thelinmichael', 'wizzler']).then(
-      function(data) {
+      function (data) {
         expect(data.body).toEqual([true, false]);
         done();
       },
-      function(err) {
+      function (err) {
         console.log(err);
         done(err);
       }
@@ -3107,7 +3088,7 @@ describe('Spotify Web API', () => {
       accessToken: accessToken
     });
 
-    api.isFollowingUsers(['thelinmichael', 'wizzler'], function(err, data) {
+    api.isFollowingUsers(['thelinmichael', 'wizzler'], function (err, data) {
       expect(err).toBeFalsy();
       expect(data.body).toEqual([true, false]);
       done();
@@ -3139,11 +3120,11 @@ describe('Spotify Web API', () => {
     });
 
     api.isFollowingArtists(['137W8MRPWKqSmrBGDBFSop']).then(
-      function(data) {
+      function (data) {
         expect(data.body).toEqual([false]);
         done();
       },
-      function(err) {
+      function (err) {
         console.log(err);
         done(err);
       }
@@ -3174,7 +3155,7 @@ describe('Spotify Web API', () => {
       accessToken: accessToken
     });
 
-    api.isFollowingArtists(['137W8MRPWKqSmrBGDBFSop'], function(err, data) {
+    api.isFollowingArtists(['137W8MRPWKqSmrBGDBFSop'], function (err, data) {
       expect(err).toBeFalsy();
       expect(data.body).toEqual([false]);
       done();
@@ -3204,11 +3185,11 @@ describe('Spotify Web API', () => {
     });
 
     api.getFollowedArtists({ after: '6tbXwhqy3WAFqanusCLvEU', limit: 3 }).then(
-      function(data) {
+      function (data) {
         expect(data.body.artists).toBeTruthy();
         done();
       },
-      function(err) {
+      function (err) {
         done(err);
       }
     );
@@ -3238,7 +3219,7 @@ describe('Spotify Web API', () => {
 
     api.getFollowedArtists(
       { after: '6tbXwhqy3WAFqanusCLvEU', limit: 3 },
-      function(err, data) {
+      function (err, data) {
         expect(err).toBeFalsy();
         expect(data.body.artists).toBeTruthy();
         done();
@@ -3276,11 +3257,11 @@ describe('Spotify Web API', () => {
         'ella'
       ])
       .then(
-        function(data) {
+        function (data) {
           expect(data.body).toEqual([true, false]);
           done();
         },
-        function(err) {
+        function (err) {
           console.log(err);
           done(err);
         }
@@ -3323,10 +3304,10 @@ describe('Spotify Web API', () => {
         'spotify:track:1301WleyT98MSxVHPZCA6M'
       ])
       .then(
-        function(data) {
+        function (data) {
           done();
         },
-        function(err) {
+        function (err) {
           console.log(err.error);
           done(err);
         }
@@ -3370,7 +3351,7 @@ describe('Spotify Web API', () => {
         'spotify:track:1301WleyT98MSxVHPZCA6M'
       ],
       null,
-      function(err, data) {
+      function (err, data) {
         done();
       }
     );
@@ -3410,7 +3391,7 @@ describe('Spotify Web API', () => {
       '5ieJqeLJjjI8iJWaxeBLuK',
       [0, 2],
       '0wD+DKCUxiSR/WY8lF3fiCTb7Z8X4ifTUtqn8rO82O4Mvi5wsX8BsLj7IbIpLVM9',
-      function(err, data) {
+      function (err, data) {
         if (err) {
           done(err);
         } else {
@@ -3462,7 +3443,7 @@ describe('Spotify Web API', () => {
         snapshot_id:
           '0wD+DKCUxiSR/WY8lF3fiCTb7Z8X4ifTUtqn8rO82O4Mvi5wsX8BsLj7IbIpLVM9'
       },
-      function(err, data) {
+      function (err, data) {
         done(err);
       }
     );
@@ -3505,7 +3486,7 @@ describe('Spotify Web API', () => {
         'spotify:track:491rM2JN8KvmV6p0oDDuJT',
         'spotify:track:5erahPIwlq1PvuYRGtVIuG'
       ],
-      function(err, data) {
+      function (err, data) {
         done(err);
       }
     );
@@ -3553,7 +3534,7 @@ describe('Spotify Web API', () => {
       5,
       1512,
       options,
-      function(err, data) {
+      function (err, data) {
         if (err) {
           done(err);
         } else {
@@ -3585,10 +3566,10 @@ describe('Spotify Web API', () => {
     });
 
     api.addToMySavedTracks(['3VNWq8rTnQG6fM1eldSpZ0']).then(
-      function(data) {
+      function (data) {
         done();
       },
-      function(err) {
+      function (err) {
         console.log(err);
         done(err);
       }
@@ -3616,7 +3597,7 @@ describe('Spotify Web API', () => {
       accessToken: accessToken
     });
 
-    api.addToMySavedTracks(['3VNWq8rTnQG6fM1eldSpZ0'], function(err, data) {
+    api.addToMySavedTracks(['3VNWq8rTnQG6fM1eldSpZ0'], function (err, data) {
       done();
     });
   });
@@ -3638,8 +3619,7 @@ describe('Spotify Web API', () => {
         },
         body: JSON.stringify({
           albums: {
-            href:
-              'https://api.spotify.com/v1/browse/new-releases?country=SE&offset=0&limit=5',
+            href: 'https://api.spotify.com/v1/browse/new-releases?country=SE&offset=0&limit=5',
             items: [{}, {}, {}, {}, {}]
           }
         })
@@ -3658,7 +3638,7 @@ describe('Spotify Web API', () => {
         offset: 0,
         country: 'SE'
       },
-      function(err, data) {
+      function (err, data) {
         expect(err).toBeFalsy();
         expect(data.body.albums.href).toBe(
           'https://api.spotify.com/v1/browse/new-releases?country=SE&offset=0&limit=5'
@@ -3689,8 +3669,7 @@ describe('Spotify Web API', () => {
         },
         body: JSON.stringify({
           playlists: {
-            href:
-              'https://api.spotify.com/v1/browse/featured-playlists?country=SE&locale=sv_SE&timestamp=2014-10-23T09:00:00&offset=1&limit=3',
+            href: 'https://api.spotify.com/v1/browse/featured-playlists?country=SE&locale=sv_SE&timestamp=2014-10-23T09:00:00&offset=1&limit=3',
             items: [{}, {}, {}]
           }
         })
@@ -3712,7 +3691,7 @@ describe('Spotify Web API', () => {
         timestamp: '2014-10-23T09:00:00'
       })
       .then(
-        function(data) {
+        function (data) {
           expect(data.body.playlists.href).toBe(
             'https://api.spotify.com/v1/browse/featured-playlists?country=SE&locale=sv_SE&timestamp=2014-10-23T09:00:00&offset=1&limit=3'
           );
@@ -3720,7 +3699,7 @@ describe('Spotify Web API', () => {
           expect(data.statusCode).toBe(200);
           done();
         },
-        function(err) {
+        function (err) {
           console.log(err);
           done(err);
         }
@@ -3745,8 +3724,7 @@ describe('Spotify Web API', () => {
         },
         body: JSON.stringify({
           playlists: {
-            href:
-              'https://api.spotify.com/v1/browse/featured-playlists?country=SE&locale=sv_SE&timestamp=2014-10-23T09:00:00&offset=1&limit=3',
+            href: 'https://api.spotify.com/v1/browse/featured-playlists?country=SE&locale=sv_SE&timestamp=2014-10-23T09:00:00&offset=1&limit=3',
             items: [{}, {}, {}]
           }
         })
@@ -3767,7 +3745,7 @@ describe('Spotify Web API', () => {
         locale: 'sv_SE',
         timestamp: '2014-10-23T09:00:00'
       },
-      function(err, data) {
+      function (err, data) {
         expect(err).toBeFalsy();
         expect(data.body.playlists.href).toBe(
           'https://api.spotify.com/v1/browse/featured-playlists?country=SE&locale=sv_SE&timestamp=2014-10-23T09:00:00&offset=1&limit=3'
@@ -3817,7 +3795,7 @@ describe('Spotify Web API', () => {
         country: 'SE',
         locale: 'sv_SE'
       },
-      function(err, data) {
+      function (err, data) {
         expect(err).toBeFalsy();
         expect(data.body.items[0].href).toBe(
           'https://api.spotify.com/v1/browse/categories/party'
@@ -3865,7 +3843,7 @@ describe('Spotify Web API', () => {
         country: 'SE',
         locale: 'sv_SE'
       },
-      function(err, data) {
+      function (err, data) {
         expect(err).toBeFalsy();
         expect(data.body.href).toBe(
           'https://api.spotify.com/v1/browse/categories/party'
@@ -3896,12 +3874,10 @@ describe('Spotify Web API', () => {
           playlists: {
             items: [
               {
-                href:
-                  'https://api.spotify.com/v1/users/spotifybrazilian/playlists/4k7EZPI3uKMz4aRRrLVfen'
+                href: 'https://api.spotify.com/v1/users/spotifybrazilian/playlists/4k7EZPI3uKMz4aRRrLVfen'
               },
               {
-                href:
-                  'https://api.spotify.com/v1/users/spotifybrazilian/playlists/4HZh0C9y80GzHDbHZyX770'
+                href: 'https://api.spotify.com/v1/users/spotifybrazilian/playlists/4HZh0C9y80GzHDbHZyX770'
               }
             ]
           }
@@ -3922,7 +3898,7 @@ describe('Spotify Web API', () => {
         limit: 2,
         offset: 1
       },
-      function(err, data) {
+      function (err, data) {
         expect(err).toBeFalsy();
         expect(data.body.playlists.items[0].href).toBe(
           'https://api.spotify.com/v1/users/spotifybrazilian/playlists/4k7EZPI3uKMz4aRRrLVfen'
@@ -3956,10 +3932,10 @@ describe('Spotify Web API', () => {
     var api = new SpotifyWebApi();
 
     api.getAudioAnalysisForTrack('3Qm86XLflmIXVm1wcwkgDK').then(
-      function(data) {
+      function (data) {
         done();
       },
-      function(err) {
+      function (err) {
         done(err);
       }
     );
@@ -3987,11 +3963,11 @@ describe('Spotify Web API', () => {
     var api = new SpotifyWebApi();
 
     api.getAudioFeaturesForTrack('3Qm86XLflmIXVm1wcwkgDK').then(
-      function(data) {
+      function (data) {
         expect(data.body.danceability).toBe(20);
         done();
       },
-      function(err) {
+      function (err) {
         done(err);
       }
     );
@@ -4025,11 +4001,11 @@ describe('Spotify Web API', () => {
         '1lDWb6b6ieDQ2xT7ewTC3G'
       ])
       .then(
-        function(data) {
+        function (data) {
           expect(data.body.audio_features).toBeTruthy();
           done();
         },
-        function(err) {
+        function (err) {
           done(err);
         }
       );
@@ -4071,11 +4047,11 @@ describe('Spotify Web API', () => {
         min_popularity: 50
       })
       .then(
-        function(data) {
+        function (data) {
           expect(data.body.tracks).toBeTruthy();
           done();
         },
-        function(err) {
+        function (err) {
           done(err);
         }
       );
@@ -4117,11 +4093,11 @@ describe('Spotify Web API', () => {
         min_popularity: 50
       })
       .then(
-        function(data) {
+        function (data) {
           expect(data.body.tracks).toBeTruthy();
           done();
         },
-        function(err) {
+        function (err) {
           done(err);
         }
       );
@@ -4148,11 +4124,11 @@ describe('Spotify Web API', () => {
     var api = new SpotifyWebApi();
 
     api.getAvailableGenreSeeds().then(
-      function(data) {
+      function (data) {
         expect(data.body.genres).toBeTruthy();
         done();
       },
-      function(err) {
+      function (err) {
         done(err);
       }
     );
@@ -4180,10 +4156,10 @@ describe('Spotify Web API', () => {
     var api = new SpotifyWebApi();
 
     api.getShow('123', { market: 'SE' }).then(
-      function(data) {
+      function (data) {
         done();
       },
-      function(err) {
+      function (err) {
         done(err);
       }
     );
@@ -4210,10 +4186,10 @@ describe('Spotify Web API', () => {
     var api = new SpotifyWebApi();
 
     api.getShows(['1', '2', '3'], { market: 'SE' }).then(
-      function(data) {
+      function (data) {
         done();
       },
-      function(err) {
+      function (err) {
         done(err);
       }
     );
@@ -4241,10 +4217,10 @@ describe('Spotify Web API', () => {
     var api = new SpotifyWebApi();
 
     api.containsMySavedShows(['1', '2', '3']).then(
-      function(data) {
+      function (data) {
         done();
       },
-      function(err) {
+      function (err) {
         done(err);
       }
     );
@@ -4272,10 +4248,10 @@ describe('Spotify Web API', () => {
     api.setAccessToken('longtoken');
 
     api.removeFromMySavedShows(['1', '2', '3']).then(
-      function(data) {
+      function (data) {
         done();
       },
-      function(err) {
+      function (err) {
         done(err);
       }
     );
@@ -4301,10 +4277,10 @@ describe('Spotify Web API', () => {
     api.setAccessToken('longtoken');
 
     api.addToMySavedShows(['1', '2', '3']).then(
-      function(data) {
+      function (data) {
         done();
       },
-      function(err) {
+      function (err) {
         done(err);
       }
     );
@@ -4331,10 +4307,10 @@ describe('Spotify Web API', () => {
     api.setAccessToken('longtoken');
 
     api.getMySavedShows({ market: 'DK', limit: 1, offset: 2 }).then(
-      function(data) {
+      function (data) {
         done();
       },
-      function(err) {
+      function (err) {
         done(err);
       }
     );
@@ -4362,10 +4338,10 @@ describe('Spotify Web API', () => {
     var api = new SpotifyWebApi();
 
     api.getShowEpisodes('123', { market: 'SE', limit: 1, offset: 2 }).then(
-      function(data) {
+      function (data) {
         done();
       },
-      function(err) {
+      function (err) {
         done(err);
       }
     );
@@ -4395,10 +4371,10 @@ describe('Spotify Web API', () => {
     var api = new SpotifyWebApi();
 
     api.searchShows('kvartal', { market: 'SE', limit: 3, offset: 1 }).then(
-      function(data) {
+      function (data) {
         done();
       },
-      function(err) {
+      function (err) {
         done(err);
       }
     );
@@ -4430,10 +4406,10 @@ describe('Spotify Web API', () => {
     api
       .searchEpisodes('hanif bali', { market: 'UK', limit: 10, offset: 11 })
       .then(
-        function(data) {
+        function (data) {
           done();
         },
-        function(err) {
+        function (err) {
           done(err);
         }
       );
@@ -4461,10 +4437,10 @@ describe('Spotify Web API', () => {
     var api = new SpotifyWebApi();
 
     api.getEpisode('3Qm86XLflmIXVm1wcwkgDK', { market: 'NO' }).then(
-      function(data) {
+      function (data) {
         done();
       },
-      function(err) {
+      function (err) {
         done(err);
       }
     );
@@ -4502,10 +4478,10 @@ describe('Spotify Web API', () => {
         market: 'DK'
       })
       .then(
-        function(data) {
+        function (data) {
           done();
         },
-        function(err) {
+        function (err) {
           done(err);
         }
       );
@@ -4576,7 +4552,7 @@ describe('Spotify Web API', () => {
   });
 
   /* Client credentials */
-  test('should retrieve an access token using the client credentials flow', function(done) {
+  test('should retrieve an access token using the client credentials flow', function (done) {
     fetch.mockResponse(async req => {
       expect(req.method).toBe('POST');
       expect(req.url).toBe('https://accounts.spotify.com/api/token');
@@ -4602,16 +4578,16 @@ describe('Spotify Web API', () => {
     });
 
     api.clientCredentialsGrant().then(
-      function(data) {
+      function (data) {
         done();
       },
-      function(err) {
+      function (err) {
         done(err);
       }
     );
   });
 
-  test('should retrieve an access token using the authorization code flow', function(done) {
+  test('should retrieve an access token using the authorization code flow', function (done) {
     fetch.mockResponse(async req => {
       expect(req.method).toBe('POST');
       expect(req.url).toBe('https://accounts.spotify.com/api/token');
@@ -4642,16 +4618,16 @@ describe('Spotify Web API', () => {
     var api = new SpotifyWebApi(credentials);
 
     api.authorizationCodeGrant('mySuperLongCode').then(
-      function(data) {
+      function (data) {
         done();
       },
-      function(err) {
+      function (err) {
         done(err);
       }
     );
   });
 
-  test('should refresh token', function(done) {
+  test('should refresh token', function (done) {
     fetch.mockResponse(async req => {
       expect(req.method).toBe('POST');
       expect(req.url).toBe('https://accounts.spotify.com/api/token');
@@ -4671,10 +4647,10 @@ describe('Spotify Web API', () => {
     api.setRefreshToken('myRefreshToken');
 
     api.refreshAccessToken().then(
-      function(data) {
+      function (data) {
         done();
       },
-      function(err) {
+      function (err) {
         done(err);
       }
     );
@@ -4717,12 +4693,12 @@ describe('Spotify Web API', () => {
       clientSecret: clientSecret,
       refreshToken: refreshToken
     });
-    api.refreshAccessToken().then(function(data, err) {
+    api.refreshAccessToken().then(function (data, err) {
       done(err);
     });
   });
 
-  test('should set, get and reset credentials', function(done) {
+  test('should set, get and reset credentials', function (done) {
     var api = new SpotifyWebApi();
 
     expect(api.getAccessToken()).toBeFalsy();
@@ -4779,8 +4755,10 @@ describe('Spotify Web API', () => {
 
   test("testing adding to a user's playback queue", done => {
     fetch.mockResponse(async req => {
-      expect(req.method).toBe("POST");
-      expect(req.url).toBe("https://api.spotify.com/v1/me/player/queue?uri=%22spotify%3Atrack%3A2ouFrmMwYik8nQX2n9SeZu%22");
+      expect(req.method).toBe('POST');
+      expect(req.url).toBe(
+        'https://api.spotify.com/v1/me/player/queue?uri=%22spotify%3Atrack%3A2ouFrmMwYik8nQX2n9SeZu%22'
+      );
       expect(req.headers.get('authorization')).toEqual(
         'Bearer someAccessToken'
       );
@@ -4793,18 +4771,17 @@ describe('Spotify Web API', () => {
       accessToken: 'someAccessToken'
     });
 
-    api.addToPlaybackQueue("spotify:track:2ouFrmMwYik8nQX2n9SeZu").then(
-      function(data) {
+    api
+      .addToPlaybackQueue('spotify:track:2ouFrmMwYik8nQX2n9SeZu')
+      .then(function (data) {
         done();
-      },
-    );
+      });
   });
 
-
-  test("testing getting available markets", done => {
+  test('testing getting available markets', done => {
     fetch.mockResponse(async req => {
-      expect(req.method).toBe("GET");
-      expect(req.url).toBe("https://api.spotify.com/v1/markets");
+      expect(req.method).toBe('GET');
+      expect(req.url).toBe('https://api.spotify.com/v1/markets');
       expect(req.query).toBeFalsy();
       expect(req.data).toBeFalsy();
       return {
@@ -4813,7 +4790,7 @@ describe('Spotify Web API', () => {
           'content-type': 'application/json'
         },
         body: JSON.stringify({
-          markets: ["CA", "BR", "IT"]
+          markets: ['CA', 'BR', 'IT']
         })
       };
     });
@@ -4821,19 +4798,19 @@ describe('Spotify Web API', () => {
     var api = new SpotifyWebApi();
 
     api.getAvailableMarkets().then(
-      function(data) {
-        expect(data.body).toBeTruthy()
-        done()
+      function (data) {
+        expect(data.body).toBeTruthy();
+        done();
       },
-      function(err) {
+      function (err) {
         done(err);
       }
     );
   });
 
-  test("testing getting a playlist cover image", done => {
+  test('testing getting a playlist cover image', done => {
     fetch.mockResponse(async req => {
-      expect(req.method).toBe("GET");
+      expect(req.method).toBe('GET');
       expect(req.url).toBe(
         'https://api.spotify.com/v1/playlists/3cEYpjA9oz9GiPac4AsH4n/images'
       );
@@ -4844,25 +4821,24 @@ describe('Spotify Web API', () => {
           'content-type': 'application/json'
         },
         body: JSON.stringify({
-          url: "https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb8d0ce13d55f634e290f744ba",
+          url: 'https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb8d0ce13d55f634e290f744ba',
           height: null,
           width: null
-        }),
+        })
       };
     });
 
     var api = new SpotifyWebApi({});
     api.setAccessToken('myVeryVeryLongAccessToken');
 
-    api.getPlaylistCoverImage("3cEYpjA9oz9GiPac4AsH4n")
-      .then(function(data) {
-        expect(data.statusCode).toBe(200);
-        expect(data.body.height).toBe(null);
-        expect(data.body.width).toBe(null);
-        expect(data.body.url).toBe("https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb8d0ce13d55f634e290f744ba")
-        done();
-      })
+    api.getPlaylistCoverImage('3cEYpjA9oz9GiPac4AsH4n').then(function (data) {
+      expect(data.statusCode).toBe(200);
+      expect(data.body.height).toBe(null);
+      expect(data.body.width).toBe(null);
+      expect(data.body.url).toBe(
+        'https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb8d0ce13d55f634e290f744ba'
+      );
+      done();
+    });
   });
-
-
 });

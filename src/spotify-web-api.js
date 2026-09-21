@@ -164,30 +164,29 @@ SpotifyWebApi.prototype = {
 
   /**
    * Returns an object containing the playlist cover image.
-   * @param {string} playlistId The ID of the associated playlist. 
-   * @param {requestCallback} callback Optional callback method to be called instead of the promise. 
-   * @returns {Promise|undefined} A promise that, if successful, returns an object containing the 
-   *          Playlist Cover image alongside its dimensions 
-  */
-   getPlaylistCoverImage: function(playlistId, callback) {
+   * @param {string} playlistId The ID of the associated playlist.
+   * @param {requestCallback} callback Optional callback method to be called instead of the promise.
+   * @returns {Promise|undefined} A promise that, if successful, returns an object containing the
+   *          Playlist Cover image alongside its dimensions
+   */
+  getPlaylistCoverImage: function (playlistId, callback) {
     return WebApiRequest.builder(this.getAccessToken())
-    .withPath("/v1/playlists/" + playlistId + "/images")
-    .withHeaders({"Content-Type": 'application/json'})
-    .build()
-    .execute(HttpManager.get, callback);
+      .withPath('/v1/playlists/' + playlistId + '/images')
+      .withHeaders({ 'Content-Type': 'application/json' })
+      .build()
+      .execute(HttpManager.get, callback);
   },
-  
 
- /**
-   * Adds an item to the users playback queue. 
-   * @param {string} uri The URI of the song you wish to add. 
-   * @param {requestCallback} callback Optional callback method to be called instead of the promise. 
+  /**
+   * Adds an item to the users playback queue.
+   * @param {string} uri The URI of the song you wish to add.
+   * @param {requestCallback} callback Optional callback method to be called instead of the promise.
    * @returns {Promise|undefined} A promise that, if successful, returns a 204 response and adds
    *          the associated song to the user's playback queue
-  */
-  addToPlaybackQueue: function(uri, callback) {
-    var baseUrl = "/v1/me"
-    var path = "/player/queue"
+   */
+  addToPlaybackQueue: function (uri, callback) {
+    var baseUrl = '/v1/me';
+    var path = '/player/queue';
     return WebApiRequest.builder(this.getAccessToken())
       .withPath(baseUrl + path)
       .withQueryParameters({ uri: JSON.stringify(uri) })
@@ -195,24 +194,24 @@ SpotifyWebApi.prototype = {
       .execute(HttpManager.post, callback);
   },
 
- /**
+  /**
    * Gets the available markets  
    * @deprecated As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026)
-   * @param {requestCallback} callback Optional callback method to be called instead of the promise. 
+   * @param {requestCallback} callback Optional callback method to be called instead of the promise.
    * @returns {Promise|undefined} A promise that, if successful, returns an array of objects containing
-   *          Country abbreviations 
-  */
-  getAvailableMarkets: function(callback) {
+   *          Country abbreviations
+   */
+  getAvailableMarkets: function (callback) {
     console.warn(
-      "IMPORTANT: As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!" +
-      "For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026"
+      'IMPORTANT: As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!' +
+        'For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026'
     );
-    var path = "/v1/markets"
+    var path = '/v1/markets';
     return WebApiRequest.builder(this.getAccessToken())
       .withPath(path)
       .withHeaders({ 'Content-Type': 'application/json' })
       .build()
-      .execute(HttpManager.get, callback);  
+      .execute(HttpManager.get, callback);
   },
 
   /**
@@ -234,7 +233,7 @@ SpotifyWebApi.prototype = {
 
   /**
    * Look up several tracks.
-   * @deprecated As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026) 
+   * @deprecated As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026)
    * @param {string[]} trackIds The IDs of the artists.
    * @param {Object} [options] The possible options, currently only market.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
@@ -244,8 +243,8 @@ SpotifyWebApi.prototype = {
    */
   getTracks: function (trackIds, options, callback) {
     console.warn(
-      "IMPORTANT: As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!" +
-      "For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026"
+      'IMPORTANT: As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!' +
+        'For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026'
     );
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/tracks')
@@ -278,7 +277,7 @@ SpotifyWebApi.prototype = {
 
   /**
    * Look up several albums.
-   * @deprecated As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026) 
+   * @deprecated As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026)
    * @param {string[]} albumIds The IDs of the albums.
    * @param {Object} [options] The possible options, currently only market.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
@@ -288,8 +287,8 @@ SpotifyWebApi.prototype = {
    */
   getAlbums: function (albumIds, options, callback) {
     console.warn(
-      "IMPORTANT: As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!" +
-      "For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026"
+      'IMPORTANT: As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!' +
+        'For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026'
     );
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/albums')
@@ -320,7 +319,7 @@ SpotifyWebApi.prototype = {
 
   /**
    * Look up several artists.
-   * @deprecated As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026) 
+   * @deprecated As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026)
    * @param {string[]} artistIds The IDs of the artists.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @example getArtists(['0oSGxfWSnnOXhD2fKuz2Gy', '3dBVyJ7JuOMt4GE9607Qin']).then(...)
@@ -329,8 +328,8 @@ SpotifyWebApi.prototype = {
    */
   getArtists: function (artistIds, callback) {
     console.warn(
-      "IMPORTANT: As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!" +
-      "For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026"
+      'IMPORTANT: As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!' +
+        'For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026'
     );
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/artists')
@@ -469,7 +468,7 @@ SpotifyWebApi.prototype = {
 
   /**
    * Get an artist's top tracks.
-   * @deprecated As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026) 
+   * @deprecated As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026)
    * @param {string} artistId The artist's ID.
    * @param {string} country The country/territory where the tracks are most popular. (format: ISO 3166-1 alpha-2)
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
@@ -480,8 +479,8 @@ SpotifyWebApi.prototype = {
    */
   getArtistTopTracks: function (artistId, country, callback) {
     console.warn(
-      "IMPORTANT: As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!" +
-      "For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026"
+      'IMPORTANT: As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!' +
+        'For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026'
     );
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/artists/' + artistId + '/top-tracks')
@@ -503,10 +502,10 @@ SpotifyWebApi.prototype = {
    */
   getArtistRelatedArtists: function (artistId, callback) {
     console.warn(
-      "IMPORTANT: As of November 27, 2024, Spotify has DEPRECATED this endpoint. It may be removed in future updates. " +
-      "For more details, visit: https://developer.spotify.com/blog/2024-11-27-changes-to-the-web-api"
+      'IMPORTANT: As of November 27, 2024, Spotify has DEPRECATED this endpoint. It may be removed in future updates. ' +
+        'For more details, visit: https://developer.spotify.com/blog/2024-11-27-changes-to-the-web-api'
     );
-    
+
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/artists/' + artistId + '/related-artists')
       .build()
@@ -515,7 +514,7 @@ SpotifyWebApi.prototype = {
 
   /**
    * Get information about a user.
-   * @deprecated As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026) 
+   * @deprecated As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026)
    * @param userId The user ID.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @example getUser('thelinmichael').then(...)
@@ -525,8 +524,8 @@ SpotifyWebApi.prototype = {
    */
   getUser: function (userId, callback) {
     console.warn(
-      "IMPORTANT: As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!" +
-      "For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026"
+      'IMPORTANT: As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!' +
+        'For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026'
     );
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/users/' + encodeURIComponent(userId))
@@ -552,7 +551,7 @@ SpotifyWebApi.prototype = {
 
   /**
    * Get a user's playlists.
-   * @deprecated As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026) 
+   * @deprecated As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026)
    * Deprecated was getting via /users/{userId}/playlists
    * @param {string} userId An optional id of the user. If you know the Spotify URI it is easy
    * to find the id (e.g. spotify:user:<here_is_the_id>). If not provided, the id of the user that granted
@@ -567,8 +566,8 @@ SpotifyWebApi.prototype = {
     var path;
     if (typeof userId === 'string') {
       console.warn(
-        "IMPORTANT: As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!" +
-        "For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026"
+        'IMPORTANT: As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!' +
+          'For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026'
       );
       path = '/v1/users/' + encodeURIComponent(userId) + '/playlists';
     } else if (typeof userId === 'object') {
@@ -605,7 +604,7 @@ SpotifyWebApi.prototype = {
 
   /**
    * Get tracks in a playlist.
-   * @deprecated As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026) 
+   * @deprecated As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026)
    * Use (new GET /playlists/{id}/items)
    * @param {string} playlistId The playlist's ID.
    * @param {Object} [options] Optional options, such as fields.
@@ -616,8 +615,8 @@ SpotifyWebApi.prototype = {
    */
   getPlaylistTracks: function (playlistId, options, callback) {
     console.warn(
-      "IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!" +
-      "For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026"
+      'IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!' +
+        'For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026'
     );
     var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/playlists/' + playlistId + '/items')
@@ -632,7 +631,9 @@ SpotifyWebApi.prototype = {
         }
 
         if (result.body.items === undefined) {
-          return callback(_this._createMissingPlaylistItemsError(playlistId, result));
+          return callback(
+            _this._createMissingPlaylistItemsError(playlistId, result)
+          );
         }
 
         return callback(null, result);
@@ -673,7 +674,7 @@ SpotifyWebApi.prototype = {
 
   /**
    * Follow a playlist.
-   * @deprecated As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026) 
+   * @deprecated As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026)
    * Use (new PUT /me/library)
    * @param {string} playlistId The playlist's ID
    * @param {Object} [options] The possible options, currently only public.
@@ -683,8 +684,8 @@ SpotifyWebApi.prototype = {
    */
   followPlaylist: function (playlistId, options, callback) {
     console.warn(
-      "IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!" +
-      "For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026"
+      'IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!' +
+        'For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026'
     );
     return this.addToMyLibrary(
       [this._buildSpotifyUri('playlist', playlistId)],
@@ -694,7 +695,7 @@ SpotifyWebApi.prototype = {
 
   /**
    * Unfollow a playlist.
-   * @deprecated As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026) 
+   * @deprecated As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026)
    * Use (new DELETE /me/library)
    * @param {string} playlistId The playlist's ID
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
@@ -703,8 +704,8 @@ SpotifyWebApi.prototype = {
    */
   unfollowPlaylist: function (playlistId, callback) {
     console.warn(
-      "IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!" +
-      "For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026"
+      'IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!' +
+        'For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026'
     );
     return this.removeFromMyLibrary(
       [this._buildSpotifyUri('playlist', playlistId)],
@@ -763,8 +764,8 @@ SpotifyWebApi.prototype = {
      */
   addTracksToPlaylist: function (playlistId, tracks, options, callback) {
     console.warn(
-      "IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!" +
-      "For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026"
+      'IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!' +
+        'For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026'
     );
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/playlists/' + playlistId + '/items')
@@ -779,7 +780,7 @@ SpotifyWebApi.prototype = {
 
   /**
    * Remove tracks from a playlist.
-   * @deprecated As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026) 
+   * @deprecated As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026)
    * Use (new DELETE /playlists/{id}/items)
    * @param {string} playlistId The playlist's ID
    * @param {Object[]} tracks An array of objects containing a property called uri with the track URI (String), and
@@ -791,8 +792,8 @@ SpotifyWebApi.prototype = {
    */
   removeTracksFromPlaylist: function (playlistId, tracks, options, callback) {
     console.warn(
-      "IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!" +
-      "For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026"
+      'IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!' +
+        'For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026'
     );
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/playlists/' + playlistId + '/items')
@@ -835,7 +836,7 @@ SpotifyWebApi.prototype = {
 
   /**
    * Replace tracks in a playlist.
-   * @deprecated As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026) 
+   * @deprecated As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026)
    * Use (new PUT /playlists/{id}/items)
    * @param {string} playlistId The playlist's ID
    * @param {Object[]} uris An array of track URIs (strings)
@@ -845,8 +846,8 @@ SpotifyWebApi.prototype = {
    */
   replaceTracksInPlaylist: function (playlistId, uris, callback) {
     console.warn(
-      "IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!" +
-      "For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026"
+      'IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!' +
+        'For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026'
     );
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/playlists/' + playlistId + '/items')
@@ -860,7 +861,7 @@ SpotifyWebApi.prototype = {
 
   /**
    * Reorder tracks in a playlist.
-   * @deprecated As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026) 
+   * @deprecated As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026)
    * Use (new PUT /playlists/{id}/items)
    * @param {string} playlistId The playlist's ID
    * @param {int} rangeStart The position of the first track to be reordered.
@@ -878,8 +879,8 @@ SpotifyWebApi.prototype = {
     callback
   ) {
     console.warn(
-      "IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!" +
-      "For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026"
+      'IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!' +
+        'For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026'
     );
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/playlists/' + playlistId + '/items')
@@ -907,10 +908,10 @@ SpotifyWebApi.prototype = {
    */
   getAudioFeaturesForTrack: function (trackId, callback) {
     console.warn(
-      "IMPORTANT: As of November 27, 2024, Spotify has DEPRECATED this endpoint. It may be removed in future updates. " +
-      "For more details, visit: https://developer.spotify.com/blog/2024-11-27-changes-to-the-web-api"
+      'IMPORTANT: As of November 27, 2024, Spotify has DEPRECATED this endpoint. It may be removed in future updates. ' +
+        'For more details, visit: https://developer.spotify.com/blog/2024-11-27-changes-to-the-web-api'
     );
-    
+
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/audio-features/' + trackId)
       .build()
@@ -929,10 +930,10 @@ SpotifyWebApi.prototype = {
    */
   getAudioAnalysisForTrack: function (trackId, callback) {
     console.warn(
-      "IMPORTANT: As of November 27, 2024, Spotify has DEPRECATED this endpoint. It may be removed in future updates. " +
-      "For more details, visit: https://developer.spotify.com/blog/2024-11-27-changes-to-the-web-api"
+      'IMPORTANT: As of November 27, 2024, Spotify has DEPRECATED this endpoint. It may be removed in future updates. ' +
+        'For more details, visit: https://developer.spotify.com/blog/2024-11-27-changes-to-the-web-api'
     );
-    
+
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/audio-analysis/' + trackId)
       .build()
@@ -951,10 +952,10 @@ SpotifyWebApi.prototype = {
    */
   getAudioFeaturesForTracks: function (trackIds, callback) {
     console.warn(
-      "IMPORTANT: As of November 27, 2024, Spotify has DEPRECATED this endpoint. It may be removed in future updates. " +
-      "For more details, visit: https://developer.spotify.com/blog/2024-11-27-changes-to-the-web-api"
+      'IMPORTANT: As of November 27, 2024, Spotify has DEPRECATED this endpoint. It may be removed in future updates. ' +
+        'For more details, visit: https://developer.spotify.com/blog/2024-11-27-changes-to-the-web-api'
     );
-    
+
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/audio-features')
       .withQueryParameters({
@@ -975,10 +976,10 @@ SpotifyWebApi.prototype = {
    */
   getRecommendations: function (options, callback) {
     console.warn(
-      "IMPORTANT: As of November 27, 2024, Spotify has DEPRECATED this endpoint. It may be removed in future updates. " +
-      "For more details, visit: https://developer.spotify.com/blog/2024-11-27-changes-to-the-web-api"
+      'IMPORTANT: As of November 27, 2024, Spotify has DEPRECATED this endpoint. It may be removed in future updates. ' +
+        'For more details, visit: https://developer.spotify.com/blog/2024-11-27-changes-to-the-web-api'
     );
-    
+
     var _opts = {};
     var optionsOfTypeArray = ['seed_artists', 'seed_genres', 'seed_tracks'];
     for (var option in options) {
@@ -1033,7 +1034,7 @@ SpotifyWebApi.prototype = {
 
   /**
    * Check if one or more tracks is already saved in the current Spotify user’s “Your Music” library.
-   * @deprecated As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026) 
+   * @deprecated As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026)
    * Use (new GET /me/library/contains)
    * @param {string[]} trackIds The track IDs
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
@@ -1044,8 +1045,8 @@ SpotifyWebApi.prototype = {
    */
   containsMySavedTracks: function (trackIds, callback) {
     console.warn(
-      "IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!" +
-      "For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026"
+      'IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!' +
+        'For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026'
     );
     return this.containsMyLibraryItems(
       this._buildSpotifyUris('track', trackIds),
@@ -1055,7 +1056,7 @@ SpotifyWebApi.prototype = {
 
   /**
    * Remove a track from the authenticated user's Your Music library.
-   * @deprecated As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026) 
+   * @deprecated As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026)
    * Use (new DELETE /me/library)
    * @param {string[]} trackIds The track IDs
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
@@ -1071,7 +1072,7 @@ SpotifyWebApi.prototype = {
 
   /**
    * Add a track from the authenticated user's Your Music library.
-   * @deprecated As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026) 
+   * @deprecated As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026)
    * Use (new PUT /me/library)
    * @param {string[]} trackIds The track IDs
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
@@ -1079,15 +1080,18 @@ SpotifyWebApi.prototype = {
    */
   addToMySavedTracks: function (trackIds, callback) {
     console.warn(
-      "IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!" +
-      "For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026"
+      'IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!' +
+        'For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026'
     );
-    return this.addToMyLibrary(this._buildSpotifyUris('track', trackIds), callback);
+    return this.addToMyLibrary(
+      this._buildSpotifyUris('track', trackIds),
+      callback
+    );
   },
 
   /**
    * Remove an album from the authenticated user's Your Music library.
-   * @deprecated As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026) 
+   * @deprecated As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026)
    * Use (new DELETE /me/library)
    * @param {string[]} albumIds The album IDs
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
@@ -1103,7 +1107,7 @@ SpotifyWebApi.prototype = {
 
   /**
    * Add an album from the authenticated user's Your Music library.
-   * @deprecated As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026) 
+   * @deprecated As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026)
    * Use (new PUT /me/library)
    * @param {string[]} albumIds The track IDs
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
@@ -1111,10 +1115,13 @@ SpotifyWebApi.prototype = {
    */
   addToMySavedAlbums: function (albumIds, callback) {
     console.warn(
-      "IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!" +
-      "For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026"
+      'IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!' +
+        'For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026'
     );
-    return this.addToMyLibrary(this._buildSpotifyUris('album', albumIds), callback);
+    return this.addToMyLibrary(
+      this._buildSpotifyUris('album', albumIds),
+      callback
+    );
   },
 
   /**
@@ -1134,7 +1141,7 @@ SpotifyWebApi.prototype = {
 
   /**
    * Check if one or more albums is already saved in the current Spotify user’s “Your Music” library.
-   * @deprecated As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026) 
+   * @deprecated As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026)
    * Use (new GET /me/library/contains)
    * @param {string[]} albumIds The album IDs
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
@@ -1145,8 +1152,8 @@ SpotifyWebApi.prototype = {
    */
   containsMySavedAlbums: function (albumIds, callback) {
     console.warn(
-      "IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!" +
-      "For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026"
+      'IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!' +
+        'For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026'
     );
     return this.containsMyLibraryItems(
       this._buildSpotifyUris('album', albumIds),
@@ -1221,10 +1228,7 @@ SpotifyWebApi.prototype = {
       .execute(HttpManager.post, callback);
   },
 
-
-
-
-  /** 
+  /**
    * Get the Current User's Available Devices
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @returns {Promise|undefined} A promise that if successful, resolves into an array of device objects,
@@ -1237,7 +1241,6 @@ SpotifyWebApi.prototype = {
       .execute(HttpManager.get, callback);
   },
 
-  
   /**
    * Get the Current User's Currently Playing Track.
    * @param {Object} [options] Options, being market.
@@ -1477,7 +1480,7 @@ SpotifyWebApi.prototype = {
 
   /**
    * Add the current user as a follower of one or more other Spotify users.
-   * @deprecated As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026) 
+   * @deprecated As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026)
    * Use (new PUT /me/library)
    * @param {string[]} userIds The IDs of the users to be followed.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
@@ -1487,10 +1490,13 @@ SpotifyWebApi.prototype = {
    */
   followUsers: function (userIds, callback) {
     console.warn(
-      "IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!" +
-      "For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026"
+      'IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!' +
+        'For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026'
     );
-    return this.addToMyLibrary(this._buildSpotifyUris('user', userIds), callback);
+    return this.addToMyLibrary(
+      this._buildSpotifyUris('user', userIds),
+      callback
+    );
   },
 
   /**
@@ -1502,7 +1508,10 @@ SpotifyWebApi.prototype = {
    *          it contains an error object. Not returned if a callback is given.
    */
   followArtists: function (artistIds, callback) {
-    return this.addToMyLibrary(this._buildSpotifyUris('artist', artistIds), callback);
+    return this.addToMyLibrary(
+      this._buildSpotifyUris('artist', artistIds),
+      callback
+    );
   },
 
   /**
@@ -1514,7 +1523,10 @@ SpotifyWebApi.prototype = {
    *          it contains an error object. Not returned if a callback is given.
    */
   unfollowUsers: function (userIds, callback) {
-    return this.removeFromMyLibrary(this._buildSpotifyUris('user', userIds), callback);
+    return this.removeFromMyLibrary(
+      this._buildSpotifyUris('user', userIds),
+      callback
+    );
   },
 
   /**
@@ -1534,7 +1546,7 @@ SpotifyWebApi.prototype = {
 
   /**
    * Check to see if the current user is following one or more other Spotify users.
-   * @deprecated As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026) 
+   * @deprecated As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026)
    * Use (new GET /me/library/contains)
    * @param {string[]} userIds The IDs of the users to check if are followed by the current user.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
@@ -1546,8 +1558,8 @@ SpotifyWebApi.prototype = {
    */
   isFollowingUsers: function (userIds, callback) {
     console.warn(
-      "IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!" +
-      "For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026"
+      'IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!' +
+        'For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026'
     );
     return this.containsMyLibraryItems(
       this._buildSpotifyUris('user', userIds),
@@ -1577,7 +1589,7 @@ SpotifyWebApi.prototype = {
 
   /**
    * Check if users are following a playlist.
-   * @deprecated As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026) 
+   * @deprecated As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026)
    * Use (new GET /me/library/contains)
    * @param {string} userId The playlist's owner's user ID
    * @param {string} playlistId The playlist's ID
@@ -1588,8 +1600,8 @@ SpotifyWebApi.prototype = {
    */
   areFollowingPlaylist: function (userId, playlistId, followerIds, callback) {
     console.warn(
-      "IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!" +
-      "For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026"
+      'IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!' +
+        'For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026'
     );
     return WebApiRequest.builder(this.getAccessToken())
       .withPath(
@@ -1608,7 +1620,7 @@ SpotifyWebApi.prototype = {
 
   /**
    * Check to see if the current user is following one or more artists.
-   * @deprecated As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026) 
+   * @deprecated As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026)
    * Use (new GET /me/library/contains)
    * @param {string[]} artistIds The IDs of the artists to check if are followed by the current user.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
@@ -1620,8 +1632,8 @@ SpotifyWebApi.prototype = {
    */
   isFollowingArtists: function (artistIds, callback) {
     console.warn(
-      "IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!" +
-      "For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026"
+      'IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!' +
+        'For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026'
     );
     return this.containsMyLibraryItems(
       this._buildSpotifyUris('artist', artistIds),
@@ -1631,7 +1643,7 @@ SpotifyWebApi.prototype = {
 
   /**
    * Retrieve new releases
-   * @deprecated As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026) 
+   * @deprecated As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026)
    * @param {Object} [options] Options, being country, limit and/or offset.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @returns {Promise|undefined} A promise that if successful, resolves to an object containing a paging object which contains
@@ -1639,8 +1651,8 @@ SpotifyWebApi.prototype = {
    */
   getNewReleases: function (options, callback) {
     console.warn(
-      "IMPORTANT: As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!" +
-      "For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026"
+      'IMPORTANT: As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!' +
+        'For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026'
     );
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/browse/new-releases')
@@ -1659,10 +1671,10 @@ SpotifyWebApi.prototype = {
    */
   getFeaturedPlaylists: function (options, callback) {
     console.warn(
-      "IMPORTANT: As of November 27, 2024, Spotify has DEPRECATED this endpoint. It may be removed in future updates. " +
-      "For more details, visit: https://developer.spotify.com/blog/2024-11-27-changes-to-the-web-api"
+      'IMPORTANT: As of November 27, 2024, Spotify has DEPRECATED this endpoint. It may be removed in future updates. ' +
+        'For more details, visit: https://developer.spotify.com/blog/2024-11-27-changes-to-the-web-api'
     );
-    
+
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/browse/featured-playlists')
       .withQueryParameters(options)
@@ -1672,7 +1684,7 @@ SpotifyWebApi.prototype = {
 
   /**
    * Retrieve a list of categories used to tag items in Spotify (e.g. in the 'Browse' tab)
-   * @deprecated As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026) 
+   * @deprecated As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026)
    * @param {Object} [options] Options, being country, locale, limit, offset.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @returns {Promise|undefined} A promise that if successful, resolves to an object containing a paging object of categories.
@@ -1680,8 +1692,8 @@ SpotifyWebApi.prototype = {
    */
   getCategories: function (options, callback) {
     console.warn(
-      "IMPORTANT: As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!" +
-      "For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026"
+      'IMPORTANT: As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!' +
+        'For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026'
     );
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/browse/categories')
@@ -1692,7 +1704,7 @@ SpotifyWebApi.prototype = {
 
   /**
    * Retrieve a category.
-   * @deprecated As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026) 
+   * @deprecated As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026)
    * @param {string} categoryId The id of the category to retrieve.
    * @param {Object} [options] Options, being country, locale.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
@@ -1701,8 +1713,8 @@ SpotifyWebApi.prototype = {
    */
   getCategory: function (categoryId, options, callback) {
     console.warn(
-      "IMPORTANT: As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!" +
-      "For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026"
+      'IMPORTANT: As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!' +
+        'For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026'
     );
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/browse/categories/' + categoryId)
@@ -1722,8 +1734,8 @@ SpotifyWebApi.prototype = {
    */
   getPlaylistsForCategory: function (categoryId, options, callback) {
     console.warn(
-      "IMPORTANT: As of November 27, 2024, Spotify has DEPRECATED this endpoint. It may be removed in future updates. " +
-      "For more details, visit: https://developer.spotify.com/blog/2024-11-27-changes-to-the-web-api"
+      'IMPORTANT: As of November 27, 2024, Spotify has DEPRECATED this endpoint. It may be removed in future updates. ' +
+        'For more details, visit: https://developer.spotify.com/blog/2024-11-27-changes-to-the-web-api'
     );
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/browse/categories/' + categoryId + '/playlists')
@@ -1751,7 +1763,7 @@ SpotifyWebApi.prototype = {
 
   /**
    * Look up several shows.
-   * @deprecated As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026) 
+   * @deprecated As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026)
    * @param {string[]} showIds The IDs of the shows.
    * @param {Object} [options] The possible options, currently only market.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
@@ -1761,8 +1773,8 @@ SpotifyWebApi.prototype = {
    */
   getShows: function (showIds, options, callback) {
     console.warn(
-      "IMPORTANT: As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!" +
-      "For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026"
+      'IMPORTANT: As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!' +
+        'For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026'
     );
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/shows')
@@ -1778,7 +1790,7 @@ SpotifyWebApi.prototype = {
 
   /**
    * Check if one or more shows is already saved in the current Spotify user’s “Your Music” library.
-   * @deprecated As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026) 
+   * @deprecated As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026)
    * Use (new GET /me/library/contains)
    * @param {string[]} showIds The show IDs
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
@@ -1789,8 +1801,8 @@ SpotifyWebApi.prototype = {
    */
   containsMySavedShows: function (showIds, callback) {
     console.warn(
-      "IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!" +
-      "For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026"
+      'IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!' +
+        'For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026'
     );
     return this.containsMyLibraryItems(
       this._buildSpotifyUris('show', showIds),
@@ -1800,7 +1812,7 @@ SpotifyWebApi.prototype = {
 
   /**
    * Remove an show from the authenticated user's Your Music library.
-   * @deprecated As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026) 
+   * @deprecated As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026)
    * Use (new DELETE /me/library)
    * @param {string[]} showIds The show IDs
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
@@ -1809,15 +1821,18 @@ SpotifyWebApi.prototype = {
    */
   removeFromMySavedShows: function (showIds, callback) {
     console.warn(
-      "IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!" +
-      "For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026"
+      'IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!' +
+        'For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026'
     );
-    return this.removeFromMyLibrary(this._buildSpotifyUris('show', showIds), callback);
+    return this.removeFromMyLibrary(
+      this._buildSpotifyUris('show', showIds),
+      callback
+    );
   },
 
   /**
    * Add a show from the authenticated user's Your Music library.
-   * @deprecated As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026) 
+   * @deprecated As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026)
    * use (new PUT /me/library)
    * @param {string[]} showIds The show IDs
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
@@ -1825,10 +1840,13 @@ SpotifyWebApi.prototype = {
    */
   addToMySavedShows: function (showIds, callback) {
     console.warn(
-      "IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!" +
-      "For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026"
+      'IMPORTANT: As of (starting for a new apps on Febuary 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!' +
+        'For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026'
     );
-    return this.addToMyLibrary(this._buildSpotifyUris('show', showIds), callback);
+    return this.addToMyLibrary(
+      this._buildSpotifyUris('show', showIds),
+      callback
+    );
   },
 
   /**
@@ -1911,7 +1929,7 @@ SpotifyWebApi.prototype = {
 
   /**
    * Look up several episodes.
-   * @deprecated As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026) 
+   * @deprecated As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT! (https://developer.spotify.com/documentation/web-api/references/changes/february-2026)
    * @param {string[]} episodeIds The IDs of the episodes.
    * @param {Object} [options] The possible options, currently only market.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
@@ -1921,8 +1939,8 @@ SpotifyWebApi.prototype = {
    */
   getEpisodes: function (episodeIds, options, callback) {
     console.warn(
-      "IMPORTANT: As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!" +
-      "For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026"
+      'IMPORTANT: As of (starting for a new apps on February 11 2026) March 6 2026 Spotify DEPRECATED AND REMOVED this ENDPOINT!' +
+        'For more details, visit: https://developer.spotify.com/documentation/web-api/references/changes/february-2026'
     );
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/episodes')

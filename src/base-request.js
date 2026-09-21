@@ -29,13 +29,11 @@ Request.prototype.getScheme = Request.prototype._getter('scheme');
 
 Request.prototype.getPath = Request.prototype._getter('path');
 
-Request.prototype.getQueryParameters = Request.prototype._getter(
-  'queryParameters'
-);
+Request.prototype.getQueryParameters =
+  Request.prototype._getter('queryParameters');
 
-Request.prototype.getBodyParameters = Request.prototype._getter(
-  'bodyParameters'
-);
+Request.prototype.getBodyParameters =
+  Request.prototype._getter('bodyParameters');
 
 Request.prototype.getHeaders = Request.prototype._getter('headers');
 
@@ -129,13 +127,11 @@ Builder.prototype._assigner = function (key) {
   };
 };
 
-Builder.prototype.withQueryParameters = Builder.prototype._assigner(
-  'queryParameters'
-);
+Builder.prototype.withQueryParameters =
+  Builder.prototype._assigner('queryParameters');
 
-Builder.prototype.withBodyParameters = Builder.prototype._assigner(
-  'bodyParameters'
-);
+Builder.prototype.withBodyParameters =
+  Builder.prototype._assigner('bodyParameters');
 
 Builder.prototype.withHeaders = Builder.prototype._assigner('headers');
 

@@ -45,8 +45,8 @@ var _getParametersFromRequest = function (request) {
  * @param {Response} response
  */
 var _toError = async function (response) {
-  let body
-  let response2
+  let body;
+  let response2;
   try {
     response2 = response.clone();
     body = await response.json();
