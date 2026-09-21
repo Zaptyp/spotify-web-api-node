@@ -1399,7 +1399,7 @@ describe('Spotify Web API', () => {
       expect(req.url).toBe('https://api.spotify.com/v1/me/playlists');
       expect(req.headers.get('authorization')).toBe('Bearer long-access-token');
       expect(req.headers.get('content-type')).toBe('application/json');
-      expect(JSON.parse(req.body).name).toBe('My Cool Playlist');
+      expect((await req.json()).name).toBe('My Cool Playlist');
 
       return {
         status: 200,
@@ -1433,7 +1433,7 @@ describe('Spotify Web API', () => {
       expect(req.method).toBe('POST');
       expect(req.url).toBe('https://api.spotify.com/v1/me/playlists');
       expect(req.headers.get('content-type')).toBe('application/json');
-      expect(JSON.parse(req.body)).toEqual({
+      expect(await req.json()).toEqual({
         name: 'My Cool Playlist',
         description: "It's really cool",
         public: false
@@ -1470,7 +1470,7 @@ describe('Spotify Web API', () => {
         'https://api.spotify.com/v1/playlists/5ieJqeLJjjI8iJWaxeBLuK'
       );
       expect(req.headers.get('content-type')).toBe('application/json');
-      expect(JSON.parse(req.body)).toEqual({
+      expect(await req.json()).toEqual({
         name: 'This is a new name for my Cool Playlist, and will become private',
         public: false
       });
@@ -1508,7 +1508,7 @@ describe('Spotify Web API', () => {
         'https://api.spotify.com/v1/playlists/5ieJqeLJjjI8iJWaxeBLuK/items'
       );
       expect(req.headers.get('content-type')).toBe('application/json');
-      expect(JSON.parse(req.body)).toEqual({
+      expect(await req.json()).toEqual({
         uris: [
           'spotify:track:4iV5W9uYEdYUVa79Axb7Rh',
           'spotify:track:1301WleyT98MSxVHPZCA6M'
@@ -1546,7 +1546,7 @@ describe('Spotify Web API', () => {
       expect(req.method).toBe('POST');
       expect(url.pathname).toBe('/v1/playlists/5ieJqeLJjjI8iJWaxeBLuK/items');
       expect(req.headers.get('content-type')).toBe('application/json');
-      expect(JSON.parse(req.body)).toEqual({
+      expect(await req.json()).toEqual({
         uris: [
           'spotify:track:4iV5W9uYEdYUVa79Axb7Rh',
           'spotify:track:1301WleyT98MSxVHPZCA6M'
@@ -1741,7 +1741,7 @@ describe('Spotify Web API', () => {
       expect(req.method).toBe('PUT');
       expect(url.pathname).toBe('/v1/playlists/3iV5W9uYEdYUVa79Axb7Rh/images');
       expect(req.headers.get('content-type')).toBe('image/jpeg');
-      expect(String(req.body)).toContain('longbase64uri');
+      expect(await req.text()).toContain('longbase64uri');
 
       return {
         status: 202,
@@ -1966,7 +1966,7 @@ describe('Spotify Web API', () => {
       expect(req.url).toBe('https://api.spotify.com/v1/me/player');
       expect(req.headers.get('authorization')).toBe('Bearer myAccessToken');
       expect(req.headers.get('content-type')).toBe('application/json');
-      expect(JSON.parse(req.body)).toEqual({
+      expect(await req.json()).toEqual({
         device_ids: ['my-device-id'],
         play: true
       });
@@ -2003,7 +2003,7 @@ describe('Spotify Web API', () => {
       expect(req.url).toBe('https://api.spotify.com/v1/me/player');
       expect(req.headers.get('authorization')).toBe('Bearer myAccessToken');
       expect(req.headers.get('content-type')).toBe('application/json');
-      expect(JSON.parse(req.body)).toEqual({
+      expect(await req.json()).toEqual({
         device_ids: ['my-device-id']
       });
 
@@ -2066,7 +2066,7 @@ describe('Spotify Web API', () => {
       expect(url.searchParams.get('device_id')).toBe('my_device_id');
       expect(req.headers.get('authorization')).toBe('Bearer myAccessToken');
       expect(req.headers.get('content-type')).toBe('application/json');
-      expect(JSON.parse(req.body)).toEqual({
+      expect(await req.json()).toEqual({
         context_uri: 'my_context',
         offset: {
           position: 5
@@ -2470,7 +2470,7 @@ describe('Spotify Web API', () => {
       expect(req.method).toBe('DELETE');
       expect(req.url).toBe('https://api.spotify.com/v1/me/library');
       expect(req.headers.get('authorization')).toBe('Bearer myAccessToken');
-      expect(JSON.parse(req.body)).toEqual({
+      expect(await req.json()).toEqual({
         uris: ['spotify:track:3VNWq8rTnQG6fM1eldSpZ0']
       });
 
@@ -2579,7 +2579,7 @@ describe('Spotify Web API', () => {
       expect(req.method).toBe('DELETE');
       expect(req.url).toBe('https://api.spotify.com/v1/me/library');
       expect(req.headers.get('authorization')).toBe('Bearer myAccessToken');
-      expect(JSON.parse(req.body)).toEqual({
+      expect(await req.json()).toEqual({
         uris: ['spotify:album:27cZdqrQiKt3IT00338dws']
       });
 
@@ -2610,7 +2610,7 @@ describe('Spotify Web API', () => {
       expect(req.url).toBe('https://api.spotify.com/v1/me/library');
       expect(req.headers.get('authorization')).toBe('Bearer myAccessToken');
       expect(req.headers.get('content-type')).toBe('application/json');
-      expect(JSON.parse(req.body)).toEqual({
+      expect(await req.json()).toEqual({
         uris: [
           'spotify:album:4iV5W9uYEdYUVa79Axb7Rh',
           'spotify:album:1301WleyT98MSxVHPZCA6M'
@@ -2734,7 +2734,7 @@ describe('Spotify Web API', () => {
       expect(req.url).toBe('https://api.spotify.com/v1/me/library');
       expect(req.headers.get('authorization')).toBe('Bearer myAccessToken');
       expect(req.headers.get('content-type')).toBe('application/json');
-      expect(JSON.parse(req.body)).toEqual({
+      expect(await req.json()).toEqual({
         uris: ['spotify:playlist:7p9EIC2KW0NNkTEOnTUZJl']
       });
 
@@ -2768,7 +2768,7 @@ describe('Spotify Web API', () => {
       expect(req.method).toBe('DELETE');
       expect(req.url).toBe('https://api.spotify.com/v1/me/library');
       expect(req.headers.get('authorization')).toBe('Bearer myAccessToken');
-      expect(JSON.parse(req.body)).toEqual({
+      expect(await req.json()).toEqual({
         uris: ['spotify:playlist:7p9EIC2KW0NNkTEOnTUZJl']
       });
 
@@ -2800,7 +2800,7 @@ describe('Spotify Web API', () => {
       expect(url.pathname).toBe('/v1/me/library');
       expect(url.search).toBe('');
       expect(req.headers.get('authorization')).toBe('Bearer myAccessToken');
-      expect(JSON.parse(req.body)).toEqual({
+      expect(await req.json()).toEqual({
         uris: ['spotify:user:thelinmichael', 'spotify:user:wizzler']
       });
 
@@ -2832,7 +2832,7 @@ describe('Spotify Web API', () => {
       expect(url.pathname).toBe('/v1/me/library');
       expect(url.search).toBe('');
       expect(req.headers.get('authorization')).toBe('Bearer myAccessToken');
-      expect(JSON.parse(req.body)).toEqual({
+      expect(await req.json()).toEqual({
         uris: ['spotify:user:thelinmichael', 'spotify:user:wizzler']
       });
 
@@ -2860,7 +2860,7 @@ describe('Spotify Web API', () => {
       expect(url.pathname).toBe('/v1/me/library');
       expect(url.search).toBe('');
       expect(req.headers.get('authorization')).toBe('Bearer myAccessToken');
-      expect(JSON.parse(req.body)).toEqual({
+      expect(await req.json()).toEqual({
         uris: ['spotify:artist:137W8MRPWKqSmrBGDBFSop']
       });
 
@@ -2893,7 +2893,7 @@ describe('Spotify Web API', () => {
       expect(url.pathname).toBe('/v1/me/library');
       expect(url.search).toBe('');
       expect(req.headers.get('authorization')).toBe('Bearer myAccessToken');
-      expect(JSON.parse(req.body)).toEqual({
+      expect(await req.json()).toEqual({
         uris: ['spotify:artist:137W8MRPWKqSmrBGDBFSop']
       });
 
@@ -2919,7 +2919,7 @@ describe('Spotify Web API', () => {
       expect(req.method).toBe('DELETE');
       expect(url.pathname).toBe('/v1/me/library');
       expect(url.search).toBe('');
-      expect(JSON.parse(req.body)).toEqual({
+      expect(await req.json()).toEqual({
         uris: ['spotify:user:thelinmichael', 'spotify:user:wizzler']
       });
 
@@ -2950,7 +2950,7 @@ describe('Spotify Web API', () => {
       expect(req.method).toBe('DELETE');
       expect(url.pathname).toBe('/v1/me/library');
       expect(url.search).toBe('');
-      expect(JSON.parse(req.body)).toEqual({
+      expect(await req.json()).toEqual({
         uris: ['spotify:user:thelinmichael', 'spotify:user:wizzler']
       });
 
@@ -2976,7 +2976,7 @@ describe('Spotify Web API', () => {
       expect(req.method).toBe('DELETE');
       expect(url.pathname).toBe('/v1/me/library');
       expect(url.search).toBe('');
-      expect(JSON.parse(req.body)).toEqual({
+      expect(await req.json()).toEqual({
         uris: ['spotify:artist:137W8MRPWKqSmrBGDBFSop']
       });
 
@@ -3007,7 +3007,7 @@ describe('Spotify Web API', () => {
       expect(req.method).toBe('DELETE');
       expect(url.pathname).toBe('/v1/me/library');
       expect(url.search).toBe('');
-      expect(JSON.parse(req.body)).toEqual({
+      expect(await req.json()).toEqual({
         uris: ['spotify:artist:137W8MRPWKqSmrBGDBFSop']
       });
 
@@ -3276,7 +3276,7 @@ describe('Spotify Web API', () => {
       );
       expect(req.headers.get('Authorization')).toBe('Bearer long-access-token');
       expect(req.headers.get('Content-Type')).toBe('application/json');
-      const body = JSON.parse(req.body);
+      const body = await req.json();
       expect(body).toEqual({
         uris: [
           'spotify:track:4iV5W9uYEdYUVa79Axb7Rh',
@@ -3322,7 +3322,7 @@ describe('Spotify Web API', () => {
       );
       expect(req.headers.get('Authorization')).toBe('Bearer long-access-token');
       expect(req.headers.get('Content-Type')).toBe('application/json');
-      const body = JSON.parse(req.body);
+      const body = await req.json();
       expect(body).toEqual({
         uris: [
           'spotify:track:4iV5W9uYEdYUVa79Axb7Rh',
@@ -3365,7 +3365,7 @@ describe('Spotify Web API', () => {
       );
       expect(req.headers.get('Authorization')).toBe('Bearer long-access-token');
       expect(req.headers.get('Content-Type')).toBe('application/json');
-      const body = JSON.parse(req.body);
+      const body = await req.json();
 
       expect(body).toEqual({
         positions: [0, 2],
@@ -3409,7 +3409,7 @@ describe('Spotify Web API', () => {
       );
       expect(req.headers.get('Authorization')).toBe('Bearer long-access-token');
       expect(req.headers.get('Content-Type')).toBe('application/json');
-      const body = JSON.parse(req.body);
+      const body = await req.json();
 
       expect(body).toEqual({
         items: [
@@ -3457,7 +3457,7 @@ describe('Spotify Web API', () => {
       );
       expect(req.headers.get('Content-Type')).toBe('application/json');
       expect(req.headers.get('Authorization')).toBe('Bearer long-access-token');
-      const body = JSON.parse(req.body);
+      const body = await req.json();
 
       expect(body).toEqual({
         uris: [
@@ -3500,7 +3500,7 @@ describe('Spotify Web API', () => {
       );
       expect(req.headers.get('authorization')).toBe('Bearer long-access-token');
       expect(req.headers.get('content-type')).toBe('application/json');
-      const body = JSON.parse(req.body);
+      const body = await req.json();
       expect(body).toEqual({
         range_start: 5,
         range_length: 1,
@@ -3550,7 +3550,7 @@ describe('Spotify Web API', () => {
       expect(req.url).toBe('https://api.spotify.com/v1/me/library');
       expect(req.headers.get('authorization')).toBe('Bearer myAccessToken');
       expect(req.headers.get('content-type')).toBe('application/json');
-      expect(JSON.parse(req.body)).toEqual({
+      expect(await req.json()).toEqual({
         uris: ['spotify:track:3VNWq8rTnQG6fM1eldSpZ0']
       });
 
@@ -3582,7 +3582,7 @@ describe('Spotify Web API', () => {
       expect(req.url).toBe('https://api.spotify.com/v1/me/library');
       expect(req.headers.get('authorization')).toBe('Bearer myAccessToken');
       expect(req.headers.get('content-type')).toBe('application/json');
-      expect(JSON.parse(req.body)).toEqual({
+      expect(await req.json()).toEqual({
         uris: ['spotify:track:3VNWq8rTnQG6fM1eldSpZ0']
       });
 
@@ -4233,7 +4233,7 @@ describe('Spotify Web API', () => {
       expect(req.method).toBe('DELETE');
       expect(url.pathname).toBe('/v1/me/library');
       expect(url.search).toBe('');
-      expect(JSON.parse(req.body)).toEqual({
+      expect(await req.json()).toEqual({
         uris: ['spotify:show:1', 'spotify:show:2', 'spotify:show:3']
       });
       expect(req.headers.get('Authorization')).toEqual('Bearer longtoken');
@@ -4262,7 +4262,7 @@ describe('Spotify Web API', () => {
     fetch.mockResponse(async req => {
       expect(req.method).toBe('PUT');
       expect(req.url).toBe('https://api.spotify.com/v1/me/library');
-      expect(JSON.parse(req.body)).toEqual({
+      expect(await req.json()).toEqual({
         uris: ['spotify:show:1', 'spotify:show:2', 'spotify:show:3']
       });
       expect(req.headers.get('Authorization')).toEqual('Bearer longtoken');
@@ -4562,7 +4562,7 @@ describe('Spotify Web API', () => {
       expect(req.headers.get('content-type')).toBe(
         'application/x-www-form-urlencoded'
       );
-      expect(req.body.toString()).toBe('grant_type=client_credentials');
+      expect(await req.text()).toBe('grant_type=client_credentials');
 
       return {
         status: 200
@@ -4594,7 +4594,7 @@ describe('Spotify Web API', () => {
       expect(req.headers.get('content-type')).toBe(
         'application/x-www-form-urlencoded'
       );
-      expect(new URLSearchParams(String(req.body)).toString()).toBe(
+      expect(new URLSearchParams(await req.text()).toString()).toBe(
         new URLSearchParams({
           grant_type: 'authorization_code',
           redirect_uri: 'http://www.michaelthelin.se/test-callback',
@@ -4634,7 +4634,7 @@ describe('Spotify Web API', () => {
       expect(req.headers.get('Content-Type')).toBe(
         'application/x-www-form-urlencoded'
       );
-      expect(String(req.body)).toEqual(
+      expect(await req.text()).toEqual(
         'grant_type=refresh_token&refresh_token=myRefreshToken'
       );
 
@@ -4666,7 +4666,7 @@ describe('Spotify Web API', () => {
       expect(req.headers.get('authorization')).toBe(
         'Basic c29tZUNsaWVudElkOnNvbWVDbGllbnRTZWNyZXQ='
       );
-      expect(String(req.body)).toEqual(
+      expect(await req.text()).toEqual(
         'grant_type=refresh_token&refresh_token=someLongRefreshToken'
       );
 
